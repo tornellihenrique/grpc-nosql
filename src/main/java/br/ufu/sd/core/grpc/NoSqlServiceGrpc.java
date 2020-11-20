@@ -1,10 +1,18 @@
 package br.ufu.sd.core.grpc;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
+import static io.grpc.stub.ClientCalls.asyncBidiStreamingCall;
+import static io.grpc.stub.ClientCalls.asyncClientStreamingCall;
+import static io.grpc.stub.ClientCalls.asyncServerStreamingCall;
 import static io.grpc.stub.ClientCalls.asyncUnaryCall;
+import static io.grpc.stub.ClientCalls.blockingServerStreamingCall;
 import static io.grpc.stub.ClientCalls.blockingUnaryCall;
 import static io.grpc.stub.ClientCalls.futureUnaryCall;
+import static io.grpc.stub.ServerCalls.asyncBidiStreamingCall;
+import static io.grpc.stub.ServerCalls.asyncClientStreamingCall;
+import static io.grpc.stub.ServerCalls.asyncServerStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnaryCall;
+import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
 /**
@@ -22,35 +30,35 @@ public final class NoSqlServiceGrpc {
   public static final String SERVICE_NAME = "grpc.NoSqlService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.SalvarRequest,
-      br.ufu.sd.api.contract.reply.SalvarReply> getSalvarMethod;
+  private static volatile io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.SetRequest,
+      br.ufu.sd.api.contract.reply.SetReply> getSetMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "salvar",
-      requestType = br.ufu.sd.api.contract.request.SalvarRequest.class,
-      responseType = br.ufu.sd.api.contract.reply.SalvarReply.class,
+      fullMethodName = SERVICE_NAME + '/' + "set",
+      requestType = br.ufu.sd.api.contract.request.SetRequest.class,
+      responseType = br.ufu.sd.api.contract.reply.SetReply.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.SalvarRequest,
-      br.ufu.sd.api.contract.reply.SalvarReply> getSalvarMethod() {
-    io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.SalvarRequest, br.ufu.sd.api.contract.reply.SalvarReply> getSalvarMethod;
-    if ((getSalvarMethod = NoSqlServiceGrpc.getSalvarMethod) == null) {
+  public static io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.SetRequest,
+      br.ufu.sd.api.contract.reply.SetReply> getSetMethod() {
+    io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.SetRequest, br.ufu.sd.api.contract.reply.SetReply> getSetMethod;
+    if ((getSetMethod = NoSqlServiceGrpc.getSetMethod) == null) {
       synchronized (NoSqlServiceGrpc.class) {
-        if ((getSalvarMethod = NoSqlServiceGrpc.getSalvarMethod) == null) {
-          NoSqlServiceGrpc.getSalvarMethod = getSalvarMethod =
-              io.grpc.MethodDescriptor.<br.ufu.sd.api.contract.request.SalvarRequest, br.ufu.sd.api.contract.reply.SalvarReply>newBuilder()
+        if ((getSetMethod = NoSqlServiceGrpc.getSetMethod) == null) {
+          NoSqlServiceGrpc.getSetMethod = getSetMethod =
+              io.grpc.MethodDescriptor.<br.ufu.sd.api.contract.request.SetRequest, br.ufu.sd.api.contract.reply.SetReply>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "salvar"))
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "set"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  br.ufu.sd.api.contract.request.SalvarRequest.getDefaultInstance()))
+                  br.ufu.sd.api.contract.request.SetRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  br.ufu.sd.api.contract.reply.SalvarReply.getDefaultInstance()))
-              .setSchemaDescriptor(new NoSqlServiceMethodDescriptorSupplier("salvar"))
+                  br.ufu.sd.api.contract.reply.SetReply.getDefaultInstance()))
+              .setSchemaDescriptor(new NoSqlServiceMethodDescriptorSupplier("set"))
               .build();
         }
       }
     }
-    return getSalvarMethod;
+    return getSetMethod;
   }
 
   /**
@@ -109,20 +117,20 @@ public final class NoSqlServiceGrpc {
      * metodo para salvar uma tupla no banco de dados NoSQL
      * </pre>
      */
-    public void salvar(br.ufu.sd.api.contract.request.SalvarRequest request,
-        io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.SalvarReply> responseObserver) {
-      asyncUnimplementedUnaryCall(getSalvarMethod(), responseObserver);
+    public void set(br.ufu.sd.api.contract.request.SetRequest request,
+        io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.SetReply> responseObserver) {
+      asyncUnimplementedUnaryCall(getSetMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
-            getSalvarMethod(),
+            getSetMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                br.ufu.sd.api.contract.request.SalvarRequest,
-                br.ufu.sd.api.contract.reply.SalvarReply>(
-                  this, METHODID_SALVAR)))
+                br.ufu.sd.api.contract.request.SetRequest,
+                br.ufu.sd.api.contract.reply.SetReply>(
+                  this, METHODID_SET)))
           .build();
     }
   }
@@ -149,10 +157,10 @@ public final class NoSqlServiceGrpc {
      * metodo para salvar uma tupla no banco de dados NoSQL
      * </pre>
      */
-    public void salvar(br.ufu.sd.api.contract.request.SalvarRequest request,
-        io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.SalvarReply> responseObserver) {
+    public void set(br.ufu.sd.api.contract.request.SetRequest request,
+        io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.SetReply> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(getSalvarMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getSetMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -178,9 +186,9 @@ public final class NoSqlServiceGrpc {
      * metodo para salvar uma tupla no banco de dados NoSQL
      * </pre>
      */
-    public br.ufu.sd.api.contract.reply.SalvarReply salvar(br.ufu.sd.api.contract.request.SalvarRequest request) {
+    public br.ufu.sd.api.contract.reply.SetReply set(br.ufu.sd.api.contract.request.SetRequest request) {
       return blockingUnaryCall(
-          getChannel(), getSalvarMethod(), getCallOptions(), request);
+          getChannel(), getSetMethod(), getCallOptions(), request);
     }
   }
 
@@ -206,14 +214,14 @@ public final class NoSqlServiceGrpc {
      * metodo para salvar uma tupla no banco de dados NoSQL
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<br.ufu.sd.api.contract.reply.SalvarReply> salvar(
-        br.ufu.sd.api.contract.request.SalvarRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<br.ufu.sd.api.contract.reply.SetReply> set(
+        br.ufu.sd.api.contract.request.SetRequest request) {
       return futureUnaryCall(
-          getChannel().newCall(getSalvarMethod(), getCallOptions()), request);
+          getChannel().newCall(getSetMethod(), getCallOptions()), request);
     }
   }
 
-  private static final int METHODID_SALVAR = 0;
+  private static final int METHODID_SET = 0;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -232,9 +240,9 @@ public final class NoSqlServiceGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_SALVAR:
-          serviceImpl.salvar((br.ufu.sd.api.contract.request.SalvarRequest) request,
-              (io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.SalvarReply>) responseObserver);
+        case METHODID_SET:
+          serviceImpl.set((br.ufu.sd.api.contract.request.SetRequest) request,
+              (io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.SetReply>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -297,7 +305,7 @@ public final class NoSqlServiceGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new NoSqlServiceFileDescriptorSupplier())
-              .addMethod(getSalvarMethod())
+              .addMethod(getSetMethod())
               .build();
         }
       }

@@ -15,40 +15,25 @@ public final class NoSqlServiceProto {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_grpc_SalvarRequest_descriptor;
+    internal_static_grpc_SetRequest_descriptor;
   public static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_grpc_SalvarRequest_fieldAccessorTable;
+      internal_static_grpc_SetRequest_fieldAccessorTable;
   public static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_grpc_SalvarReply_descriptor;
+    internal_static_grpc_SetRequest_BigInt_descriptor;
   public static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_grpc_SalvarReply_fieldAccessorTable;
+      internal_static_grpc_SetRequest_BigInt_fieldAccessorTable;
   public static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_grpc_BInteger_descriptor;
+    internal_static_grpc_SetReply_descriptor;
   public static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_grpc_BInteger_fieldAccessorTable;
+      internal_static_grpc_SetReply_fieldAccessorTable;
   public static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_grpc_TStamp_descriptor;
+    internal_static_grpc_Valor_descriptor;
   public static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_grpc_TStamp_fieldAccessorTable;
-  public static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_grpc_Versao_descriptor;
-  public static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_grpc_Versao_fieldAccessorTable;
-  public static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_grpc_Objeto_descriptor;
-  public static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_grpc_Objeto_fieldAccessorTable;
-  public static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_grpc_ObjetoConsultado_descriptor;
-  public static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_grpc_ObjetoConsultado_fieldAccessorTable;
+      internal_static_grpc_Valor_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -58,71 +43,50 @@ public final class NoSqlServiceProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\024nosql_database.proto\022\004grpc\"k\n\rSalvarRe" +
-      "quest\022\033\n\003key\030\001 \001(\0132\016.grpc.BInteger\022\037\n\tti" +
-      "mestamp\030\002 \001(\0132\014.grpc.TStamp\022\034\n\006object\030\003 " +
-      "\001(\0132\014.grpc.Objeto\"Q\n\013SalvarReply\022\032\n\005exit" +
-      "o\030\001 \001(\0162\013.grpc.Exito\022&\n\006objeto\030\002 \001(\0132\026.g" +
-      "rpc.ObjetoConsultado\"\031\n\010BInteger\022\r\n\005valu" +
-      "e\030\001 \001(\014\"\027\n\006TStamp\022\r\n\005value\030\001 \001(\003\"\027\n\006Vers" +
-      "ao\022\r\n\005value\030\001 \001(\003\"1\n\006Objeto\022\030\n\004type\030\001 \001(" +
-      "\0162\n.grpc.Tipo\022\r\n\005value\030\002 \001(\014\"n\n\020ObjetoCo" +
-      "nsultado\022\034\n\006versao\030\001 \001(\0132\014.grpc.Versao\022\037" +
-      "\n\ttimestamp\030\002 \001(\0132\014.grpc.TStamp\022\033\n\005dados" +
-      "\030\003 \001(\0132\014.grpc.Objeto*_\n\004Tipo\022\017\n\013JSON_OBJ" +
-      "ECT\020\000\022\010\n\004DATE\020\001\022\014\n\010DATETIME\020\002\022\r\n\tTIMESTA" +
-      "MP\020\003\022\013\n\007VARCHAR\020\004\022\007\n\003INT\020\005\022\t\n\005FLOAT\020\006*\037\n" +
-      "\005Exito\022\013\n\007SUCCESS\020\000\022\t\n\005ERROR\020\0012B\n\014NoSqlS" +
-      "ervice\0222\n\006salvar\022\023.grpc.SalvarRequest\032\021." +
-      "grpc.SalvarReply\"\000B*\n\023br.ufu.sd.core.grp" +
-      "cB\021NoSqlServiceProtoP\001b\006proto3"
+      "\n\024nosql_database.proto\022\004grpc\032\034google/pro" +
+      "tobuf/struct.proto\"\207\001\n\nSetRequest\022$\n\003key" +
+      "\030\001 \001(\0132\027.grpc.SetRequest.BigInt\022\021\n\ttimes" +
+      "tamp\030\002 \001(\003\022\'\n\006objeto\030\003 \001(\0132\027.google.prot" +
+      "obuf.Struct\032\027\n\006BigInt\022\r\n\005value\030\001 \001(\014\"l\n\010" +
+      "SetReply\022#\n\005exito\030\001 \001(\0162\024.grpc.SetReply." +
+      "Exito\022\032\n\005valor\030\002 \001(\0132\013.grpc.Valor\"\037\n\005Exi" +
+      "to\022\t\n\005ERROR\020\000\022\013\n\007SUCCESS\020\001\"S\n\005Valor\022\016\n\006v" +
+      "ersao\030\001 \001(\003\022\021\n\ttimestamp\030\002 \001(\003\022\'\n\006objeto" +
+      "\030\003 \001(\0132\027.google.protobuf.Struct29\n\014NoSql" +
+      "Service\022)\n\003set\022\020.grpc.SetRequest\032\016.grpc." +
+      "SetReply\"\000B*\n\023br.ufu.sd.core.grpcB\021NoSql" +
+      "ServiceProtoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          com.google.protobuf.StructProto.getDescriptor(),
         });
-    internal_static_grpc_SalvarRequest_descriptor =
+    internal_static_grpc_SetRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_grpc_SalvarRequest_fieldAccessorTable = new
+    internal_static_grpc_SetRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_grpc_SalvarRequest_descriptor,
-        new java.lang.String[] { "Key", "Timestamp", "Object", });
-    internal_static_grpc_SalvarReply_descriptor =
+        internal_static_grpc_SetRequest_descriptor,
+        new java.lang.String[] { "Key", "Timestamp", "Objeto", });
+    internal_static_grpc_SetRequest_BigInt_descriptor =
+      internal_static_grpc_SetRequest_descriptor.getNestedTypes().get(0);
+    internal_static_grpc_SetRequest_BigInt_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_grpc_SetRequest_BigInt_descriptor,
+        new java.lang.String[] { "Value", });
+    internal_static_grpc_SetReply_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_grpc_SalvarReply_fieldAccessorTable = new
+    internal_static_grpc_SetReply_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_grpc_SalvarReply_descriptor,
-        new java.lang.String[] { "Exito", "Objeto", });
-    internal_static_grpc_BInteger_descriptor =
+        internal_static_grpc_SetReply_descriptor,
+        new java.lang.String[] { "Exito", "Valor", });
+    internal_static_grpc_Valor_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_grpc_BInteger_fieldAccessorTable = new
+    internal_static_grpc_Valor_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_grpc_BInteger_descriptor,
-        new java.lang.String[] { "Value", });
-    internal_static_grpc_TStamp_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_grpc_TStamp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_grpc_TStamp_descriptor,
-        new java.lang.String[] { "Value", });
-    internal_static_grpc_Versao_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_grpc_Versao_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_grpc_Versao_descriptor,
-        new java.lang.String[] { "Value", });
-    internal_static_grpc_Objeto_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_grpc_Objeto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_grpc_Objeto_descriptor,
-        new java.lang.String[] { "Type", "Value", });
-    internal_static_grpc_ObjetoConsultado_descriptor =
-      getDescriptor().getMessageTypes().get(6);
-    internal_static_grpc_ObjetoConsultado_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_grpc_ObjetoConsultado_descriptor,
-        new java.lang.String[] { "Versao", "Timestamp", "Dados", });
+        internal_static_grpc_Valor_descriptor,
+        new java.lang.String[] { "Versao", "Timestamp", "Objeto", });
+    com.google.protobuf.StructProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)
