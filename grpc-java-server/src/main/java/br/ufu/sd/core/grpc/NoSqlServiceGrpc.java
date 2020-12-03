@@ -61,6 +61,130 @@ public final class NoSqlServiceGrpc {
     return getSetMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.GetRequest,
+      br.ufu.sd.api.contract.reply.GetReply> getGetMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "get",
+      requestType = br.ufu.sd.api.contract.request.GetRequest.class,
+      responseType = br.ufu.sd.api.contract.reply.GetReply.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.GetRequest,
+      br.ufu.sd.api.contract.reply.GetReply> getGetMethod() {
+    io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.GetRequest, br.ufu.sd.api.contract.reply.GetReply> getGetMethod;
+    if ((getGetMethod = NoSqlServiceGrpc.getGetMethod) == null) {
+      synchronized (NoSqlServiceGrpc.class) {
+        if ((getGetMethod = NoSqlServiceGrpc.getGetMethod) == null) {
+          NoSqlServiceGrpc.getGetMethod = getGetMethod =
+              io.grpc.MethodDescriptor.<br.ufu.sd.api.contract.request.GetRequest, br.ufu.sd.api.contract.reply.GetReply>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "get"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  br.ufu.sd.api.contract.request.GetRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  br.ufu.sd.api.contract.reply.GetReply.getDefaultInstance()))
+              .setSchemaDescriptor(new NoSqlServiceMethodDescriptorSupplier("get"))
+              .build();
+        }
+      }
+    }
+    return getGetMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.DelRequest,
+      br.ufu.sd.api.contract.reply.DelReply> getDelMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "del",
+      requestType = br.ufu.sd.api.contract.request.DelRequest.class,
+      responseType = br.ufu.sd.api.contract.reply.DelReply.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.DelRequest,
+      br.ufu.sd.api.contract.reply.DelReply> getDelMethod() {
+    io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.DelRequest, br.ufu.sd.api.contract.reply.DelReply> getDelMethod;
+    if ((getDelMethod = NoSqlServiceGrpc.getDelMethod) == null) {
+      synchronized (NoSqlServiceGrpc.class) {
+        if ((getDelMethod = NoSqlServiceGrpc.getDelMethod) == null) {
+          NoSqlServiceGrpc.getDelMethod = getDelMethod =
+              io.grpc.MethodDescriptor.<br.ufu.sd.api.contract.request.DelRequest, br.ufu.sd.api.contract.reply.DelReply>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "del"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  br.ufu.sd.api.contract.request.DelRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  br.ufu.sd.api.contract.reply.DelReply.getDefaultInstance()))
+              .setSchemaDescriptor(new NoSqlServiceMethodDescriptorSupplier("del"))
+              .build();
+        }
+      }
+    }
+    return getDelMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.DelVerRequest,
+      br.ufu.sd.api.contract.reply.DelVerReply> getDelVerMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "delVer",
+      requestType = br.ufu.sd.api.contract.request.DelVerRequest.class,
+      responseType = br.ufu.sd.api.contract.reply.DelVerReply.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.DelVerRequest,
+      br.ufu.sd.api.contract.reply.DelVerReply> getDelVerMethod() {
+    io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.DelVerRequest, br.ufu.sd.api.contract.reply.DelVerReply> getDelVerMethod;
+    if ((getDelVerMethod = NoSqlServiceGrpc.getDelVerMethod) == null) {
+      synchronized (NoSqlServiceGrpc.class) {
+        if ((getDelVerMethod = NoSqlServiceGrpc.getDelVerMethod) == null) {
+          NoSqlServiceGrpc.getDelVerMethod = getDelVerMethod =
+              io.grpc.MethodDescriptor.<br.ufu.sd.api.contract.request.DelVerRequest, br.ufu.sd.api.contract.reply.DelVerReply>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "delVer"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  br.ufu.sd.api.contract.request.DelVerRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  br.ufu.sd.api.contract.reply.DelVerReply.getDefaultInstance()))
+              .setSchemaDescriptor(new NoSqlServiceMethodDescriptorSupplier("delVer"))
+              .build();
+        }
+      }
+    }
+    return getDelVerMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.TestAndSetRequest,
+      br.ufu.sd.api.contract.reply.TestAndSetReply> getTestAndSetMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "testAndSet",
+      requestType = br.ufu.sd.api.contract.request.TestAndSetRequest.class,
+      responseType = br.ufu.sd.api.contract.reply.TestAndSetReply.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.TestAndSetRequest,
+      br.ufu.sd.api.contract.reply.TestAndSetReply> getTestAndSetMethod() {
+    io.grpc.MethodDescriptor<br.ufu.sd.api.contract.request.TestAndSetRequest, br.ufu.sd.api.contract.reply.TestAndSetReply> getTestAndSetMethod;
+    if ((getTestAndSetMethod = NoSqlServiceGrpc.getTestAndSetMethod) == null) {
+      synchronized (NoSqlServiceGrpc.class) {
+        if ((getTestAndSetMethod = NoSqlServiceGrpc.getTestAndSetMethod) == null) {
+          NoSqlServiceGrpc.getTestAndSetMethod = getTestAndSetMethod =
+              io.grpc.MethodDescriptor.<br.ufu.sd.api.contract.request.TestAndSetRequest, br.ufu.sd.api.contract.reply.TestAndSetReply>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "testAndSet"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  br.ufu.sd.api.contract.request.TestAndSetRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  br.ufu.sd.api.contract.reply.TestAndSetReply.getDefaultInstance()))
+              .setSchemaDescriptor(new NoSqlServiceMethodDescriptorSupplier("testAndSet"))
+              .build();
+        }
+      }
+    }
+    return getTestAndSetMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -122,6 +246,46 @@ public final class NoSqlServiceGrpc {
       asyncUnimplementedUnaryCall(getSetMethod(), responseObserver);
     }
 
+    /**
+     * <pre>
+     * metodo para buscar uma tupla no banco de dados NoSQL
+     * </pre>
+     */
+    public void get(br.ufu.sd.api.contract.request.GetRequest request,
+        io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.GetReply> responseObserver) {
+      asyncUnimplementedUnaryCall(getGetMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     * metodo para excluir uma tupla no banco de dados NoSQL
+     * </pre>
+     */
+    public void del(br.ufu.sd.api.contract.request.DelRequest request,
+        io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.DelReply> responseObserver) {
+      asyncUnimplementedUnaryCall(getDelMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     * metodo para excluir uma tupla se a versao corresponder no banco de dados NoSQL
+     * </pre>
+     */
+    public void delVer(br.ufu.sd.api.contract.request.DelVerRequest request,
+        io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.DelVerReply> responseObserver) {
+      asyncUnimplementedUnaryCall(getDelVerMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     * metodo para salvar uma tupla no banco de dados NoSQL
+     * </pre>
+     */
+    public void testAndSet(br.ufu.sd.api.contract.request.TestAndSetRequest request,
+        io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.TestAndSetReply> responseObserver) {
+      asyncUnimplementedUnaryCall(getTestAndSetMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -131,6 +295,34 @@ public final class NoSqlServiceGrpc {
                 br.ufu.sd.api.contract.request.SetRequest,
                 br.ufu.sd.api.contract.reply.SetReply>(
                   this, METHODID_SET)))
+          .addMethod(
+            getGetMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                br.ufu.sd.api.contract.request.GetRequest,
+                br.ufu.sd.api.contract.reply.GetReply>(
+                  this, METHODID_GET)))
+          .addMethod(
+            getDelMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                br.ufu.sd.api.contract.request.DelRequest,
+                br.ufu.sd.api.contract.reply.DelReply>(
+                  this, METHODID_DEL)))
+          .addMethod(
+            getDelVerMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                br.ufu.sd.api.contract.request.DelVerRequest,
+                br.ufu.sd.api.contract.reply.DelVerReply>(
+                  this, METHODID_DEL_VER)))
+          .addMethod(
+            getTestAndSetMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                br.ufu.sd.api.contract.request.TestAndSetRequest,
+                br.ufu.sd.api.contract.reply.TestAndSetReply>(
+                  this, METHODID_TEST_AND_SET)))
           .build();
     }
   }
@@ -162,6 +354,50 @@ public final class NoSqlServiceGrpc {
       asyncUnaryCall(
           getChannel().newCall(getSetMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     * <pre>
+     * metodo para buscar uma tupla no banco de dados NoSQL
+     * </pre>
+     */
+    public void get(br.ufu.sd.api.contract.request.GetRequest request,
+        io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.GetReply> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getGetMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     * metodo para excluir uma tupla no banco de dados NoSQL
+     * </pre>
+     */
+    public void del(br.ufu.sd.api.contract.request.DelRequest request,
+        io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.DelReply> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getDelMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     * metodo para excluir uma tupla se a versao corresponder no banco de dados NoSQL
+     * </pre>
+     */
+    public void delVer(br.ufu.sd.api.contract.request.DelVerRequest request,
+        io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.DelVerReply> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getDelVerMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     * metodo para salvar uma tupla no banco de dados NoSQL
+     * </pre>
+     */
+    public void testAndSet(br.ufu.sd.api.contract.request.TestAndSetRequest request,
+        io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.TestAndSetReply> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getTestAndSetMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -189,6 +425,46 @@ public final class NoSqlServiceGrpc {
     public br.ufu.sd.api.contract.reply.SetReply set(br.ufu.sd.api.contract.request.SetRequest request) {
       return blockingUnaryCall(
           getChannel(), getSetMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * metodo para buscar uma tupla no banco de dados NoSQL
+     * </pre>
+     */
+    public br.ufu.sd.api.contract.reply.GetReply get(br.ufu.sd.api.contract.request.GetRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getGetMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * metodo para excluir uma tupla no banco de dados NoSQL
+     * </pre>
+     */
+    public br.ufu.sd.api.contract.reply.DelReply del(br.ufu.sd.api.contract.request.DelRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getDelMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * metodo para excluir uma tupla se a versao corresponder no banco de dados NoSQL
+     * </pre>
+     */
+    public br.ufu.sd.api.contract.reply.DelVerReply delVer(br.ufu.sd.api.contract.request.DelVerRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getDelVerMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * metodo para salvar uma tupla no banco de dados NoSQL
+     * </pre>
+     */
+    public br.ufu.sd.api.contract.reply.TestAndSetReply testAndSet(br.ufu.sd.api.contract.request.TestAndSetRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getTestAndSetMethod(), getCallOptions(), request);
     }
   }
 
@@ -219,9 +495,57 @@ public final class NoSqlServiceGrpc {
       return futureUnaryCall(
           getChannel().newCall(getSetMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     * metodo para buscar uma tupla no banco de dados NoSQL
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<br.ufu.sd.api.contract.reply.GetReply> get(
+        br.ufu.sd.api.contract.request.GetRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getGetMethod(), getCallOptions()), request);
+    }
+
+    /**
+     * <pre>
+     * metodo para excluir uma tupla no banco de dados NoSQL
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<br.ufu.sd.api.contract.reply.DelReply> del(
+        br.ufu.sd.api.contract.request.DelRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getDelMethod(), getCallOptions()), request);
+    }
+
+    /**
+     * <pre>
+     * metodo para excluir uma tupla se a versao corresponder no banco de dados NoSQL
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<br.ufu.sd.api.contract.reply.DelVerReply> delVer(
+        br.ufu.sd.api.contract.request.DelVerRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getDelVerMethod(), getCallOptions()), request);
+    }
+
+    /**
+     * <pre>
+     * metodo para salvar uma tupla no banco de dados NoSQL
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<br.ufu.sd.api.contract.reply.TestAndSetReply> testAndSet(
+        br.ufu.sd.api.contract.request.TestAndSetRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getTestAndSetMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_SET = 0;
+  private static final int METHODID_GET = 1;
+  private static final int METHODID_DEL = 2;
+  private static final int METHODID_DEL_VER = 3;
+  private static final int METHODID_TEST_AND_SET = 4;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -243,6 +567,22 @@ public final class NoSqlServiceGrpc {
         case METHODID_SET:
           serviceImpl.set((br.ufu.sd.api.contract.request.SetRequest) request,
               (io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.SetReply>) responseObserver);
+          break;
+        case METHODID_GET:
+          serviceImpl.get((br.ufu.sd.api.contract.request.GetRequest) request,
+              (io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.GetReply>) responseObserver);
+          break;
+        case METHODID_DEL:
+          serviceImpl.del((br.ufu.sd.api.contract.request.DelRequest) request,
+              (io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.DelReply>) responseObserver);
+          break;
+        case METHODID_DEL_VER:
+          serviceImpl.delVer((br.ufu.sd.api.contract.request.DelVerRequest) request,
+              (io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.DelVerReply>) responseObserver);
+          break;
+        case METHODID_TEST_AND_SET:
+          serviceImpl.testAndSet((br.ufu.sd.api.contract.request.TestAndSetRequest) request,
+              (io.grpc.stub.StreamObserver<br.ufu.sd.api.contract.reply.TestAndSetReply>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -306,6 +646,10 @@ public final class NoSqlServiceGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new NoSqlServiceFileDescriptorSupplier())
               .addMethod(getSetMethod())
+              .addMethod(getGetMethod())
+              .addMethod(getDelMethod())
+              .addMethod(getDelVerMethod())
+              .addMethod(getTestAndSetMethod())
               .build();
         }
       }

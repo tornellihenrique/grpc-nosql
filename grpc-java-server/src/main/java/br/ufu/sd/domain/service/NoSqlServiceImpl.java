@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.Map;
 
 import br.ufu.sd.api.contract.reply.SetReply;
-import br.ufu.sd.api.contract.reply.SetReply.Exito;
 import br.ufu.sd.api.contract.request.SetRequest;
-import br.ufu.sd.api.contract.request.SetRequest.BigInt;
 import br.ufu.sd.core.grpc.NoSqlServiceGrpc.NoSqlServiceImplBase;
 import br.ufu.sd.core.recovery.DatabaseRecovery;
+import br.ufu.sd.domain.model.BigInt;
+import br.ufu.sd.domain.model.Exito;
 import br.ufu.sd.domain.model.Valor;
 import io.grpc.stub.StreamObserver;
 
@@ -28,8 +28,8 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 	public void set(SetRequest request, StreamObserver<SetReply> responseObserver) {
 		SetReply reply = null;
 		
-		if(! database.containsKey(request.getKey())) {
-			database.put(request.getKey(), Valor.newBuilder()
+		if(! database.containsKey(request.getChave())) {
+			database.put(request.getChave(), Valor.newBuilder()
 		               .setObjeto(request.getObjeto())
 		               .setVersao(1)
 		               .setTimestamp(Instant.now().toEpochMilli()).build());
@@ -40,7 +40,7 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 				    	.build();
 		}else {
 			
-			Valor valorExistente = database.get(request.getKey());
+			Valor valorExistente = database.get(request.getChave());
 			
 			if (valorExistente.getTimestamp() == request.getTimestamp() 
 					&& valorExistente.getObjeto().getFieldsMap().equals(request.getObjeto().getFieldsMap())) {
@@ -52,7 +52,7 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 						    		.build();
 			}else {
 				synchronized (valorExistente) {
-					database.put(request.getKey(), 
+					database.put(request.getChave(), 
 							Valor.newBuilder(valorExistente).setVersao(valorExistente.getVersao()+1).setObjeto(request.getObjeto()).build());
 				}
 				

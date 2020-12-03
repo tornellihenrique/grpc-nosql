@@ -3,23 +3,22 @@
 
 package br.ufu.sd.api.contract.reply;
 
-import br.ufu.sd.core.grpc.NoSqlServiceProto;
-import br.ufu.sd.core.grpc.abstracts.SetReplyOrBuilder;
+import br.ufu.sd.core.grpc.abstracts.DelReplyOrBuilder;
 import br.ufu.sd.domain.model.Valor;
 
 /**
- * Protobuf type {@code grpc.SetReply}
+ * Protobuf type {@code grpc.DelReply}
  */
-public final class SetReply extends
+public final class DelReply extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:grpc.SetReply)
-    SetReplyOrBuilder {
+    // @@protoc_insertion_point(message_implements:grpc.DelReply)
+    DelReplyOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use SetReply.newBuilder() to construct.
-  private SetReply(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use DelReply.newBuilder() to construct.
+  private DelReply(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private SetReply() {
+  private DelReply() {
     exito_ = 0;
   }
 
@@ -27,7 +26,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(
       UnusedPrivateParameter unused) {
-    return new SetReply();
+    return new DelReply();
   }
 
   @java.lang.Override
@@ -35,7 +34,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private SetReply(
+  private DelReply(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -93,15 +92,15 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_SetReply_descriptor;
+    return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_DelReply_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_SetReply_fieldAccessorTable
+    return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_DelReply_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            br.ufu.sd.api.contract.reply.SetReply.class, br.ufu.sd.api.contract.reply.SetReply.Builder.class);
+            br.ufu.sd.api.contract.reply.DelReply.class, br.ufu.sd.api.contract.reply.DelReply.Builder.class);
   }
 
   public static final int EXITO_FIELD_NUMBER = 1;
@@ -196,10 +195,10 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof br.ufu.sd.api.contract.reply.SetReply)) {
+    if (!(obj instanceof br.ufu.sd.api.contract.reply.DelReply)) {
       return super.equals(obj);
     }
-    br.ufu.sd.api.contract.reply.SetReply other = (br.ufu.sd.api.contract.reply.SetReply) obj;
+    br.ufu.sd.api.contract.reply.DelReply other = (br.ufu.sd.api.contract.reply.DelReply) obj;
 
     if (exito_ != other.exito_) return false;
     if (hasValor() != other.hasValor()) return false;
@@ -229,69 +228,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static br.ufu.sd.api.contract.reply.SetReply parseFrom(
+  public static br.ufu.sd.api.contract.reply.DelReply parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static br.ufu.sd.api.contract.reply.SetReply parseFrom(
+  public static br.ufu.sd.api.contract.reply.DelReply parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static br.ufu.sd.api.contract.reply.SetReply parseFrom(
+  public static br.ufu.sd.api.contract.reply.DelReply parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static br.ufu.sd.api.contract.reply.SetReply parseFrom(
+  public static br.ufu.sd.api.contract.reply.DelReply parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static br.ufu.sd.api.contract.reply.SetReply parseFrom(byte[] data)
+  public static br.ufu.sd.api.contract.reply.DelReply parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static br.ufu.sd.api.contract.reply.SetReply parseFrom(
+  public static br.ufu.sd.api.contract.reply.DelReply parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static br.ufu.sd.api.contract.reply.SetReply parseFrom(java.io.InputStream input)
+  public static br.ufu.sd.api.contract.reply.DelReply parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static br.ufu.sd.api.contract.reply.SetReply parseFrom(
+  public static br.ufu.sd.api.contract.reply.DelReply parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static br.ufu.sd.api.contract.reply.SetReply parseDelimitedFrom(java.io.InputStream input)
+  public static br.ufu.sd.api.contract.reply.DelReply parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static br.ufu.sd.api.contract.reply.SetReply parseDelimitedFrom(
+  public static br.ufu.sd.api.contract.reply.DelReply parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static br.ufu.sd.api.contract.reply.SetReply parseFrom(
+  public static br.ufu.sd.api.contract.reply.DelReply parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static br.ufu.sd.api.contract.reply.SetReply parseFrom(
+  public static br.ufu.sd.api.contract.reply.DelReply parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -304,7 +303,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(br.ufu.sd.api.contract.reply.SetReply prototype) {
+  public static Builder newBuilder(br.ufu.sd.api.contract.reply.DelReply prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -320,26 +319,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code grpc.SetReply}
+   * Protobuf type {@code grpc.DelReply}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:grpc.SetReply)
-      br.ufu.sd.core.grpc.abstracts.SetReplyOrBuilder {
+      // @@protoc_insertion_point(builder_implements:grpc.DelReply)
+      br.ufu.sd.core.grpc.abstracts.DelReplyOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_SetReply_descriptor;
+      return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_DelReply_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_SetReply_fieldAccessorTable
+      return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_DelReply_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              br.ufu.sd.api.contract.reply.SetReply.class, br.ufu.sd.api.contract.reply.SetReply.Builder.class);
+              br.ufu.sd.api.contract.reply.DelReply.class, br.ufu.sd.api.contract.reply.DelReply.Builder.class);
     }
 
-    // Construct using br.ufu.sd.core.grpc.SetReply.newBuilder()
+    // Construct using br.ufu.sd.core.grpc.DelReply.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -371,17 +370,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_SetReply_descriptor;
+      return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_DelReply_descriptor;
     }
 
     @java.lang.Override
-    public br.ufu.sd.api.contract.reply.SetReply getDefaultInstanceForType() {
-      return br.ufu.sd.api.contract.reply.SetReply.getDefaultInstance();
+    public br.ufu.sd.api.contract.reply.DelReply getDefaultInstanceForType() {
+      return br.ufu.sd.api.contract.reply.DelReply.getDefaultInstance();
     }
 
     @java.lang.Override
-    public br.ufu.sd.api.contract.reply.SetReply build() {
-      br.ufu.sd.api.contract.reply.SetReply result = buildPartial();
+    public br.ufu.sd.api.contract.reply.DelReply build() {
+      br.ufu.sd.api.contract.reply.DelReply result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -389,8 +388,8 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public br.ufu.sd.api.contract.reply.SetReply buildPartial() {
-      br.ufu.sd.api.contract.reply.SetReply result = new br.ufu.sd.api.contract.reply.SetReply(this);
+    public br.ufu.sd.api.contract.reply.DelReply buildPartial() {
+      br.ufu.sd.api.contract.reply.DelReply result = new br.ufu.sd.api.contract.reply.DelReply(this);
       result.exito_ = exito_;
       if (valorBuilder_ == null) {
         result.valor_ = valor_;
@@ -435,16 +434,16 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof br.ufu.sd.api.contract.reply.SetReply) {
-        return mergeFrom((br.ufu.sd.api.contract.reply.SetReply)other);
+      if (other instanceof br.ufu.sd.api.contract.reply.DelReply) {
+        return mergeFrom((br.ufu.sd.api.contract.reply.DelReply)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(br.ufu.sd.api.contract.reply.SetReply other) {
-      if (other == br.ufu.sd.api.contract.reply.SetReply.getDefaultInstance()) return this;
+    public Builder mergeFrom(br.ufu.sd.api.contract.reply.DelReply other) {
+      if (other == br.ufu.sd.api.contract.reply.DelReply.getDefaultInstance()) return this;
       if (other.exito_ != 0) {
         setExitoValue(other.getExitoValue());
       }
@@ -466,11 +465,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      br.ufu.sd.api.contract.reply.SetReply parsedMessage = null;
+      br.ufu.sd.api.contract.reply.DelReply parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (br.ufu.sd.api.contract.reply.SetReply) e.getUnfinishedMessage();
+        parsedMessage = (br.ufu.sd.api.contract.reply.DelReply) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -665,41 +664,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:grpc.SetReply)
+    // @@protoc_insertion_point(builder_scope:grpc.DelReply)
   }
 
-  // @@protoc_insertion_point(class_scope:grpc.SetReply)
-  private static final br.ufu.sd.api.contract.reply.SetReply DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:grpc.DelReply)
+  private static final br.ufu.sd.api.contract.reply.DelReply DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new br.ufu.sd.api.contract.reply.SetReply();
+    DEFAULT_INSTANCE = new br.ufu.sd.api.contract.reply.DelReply();
   }
 
-  public static br.ufu.sd.api.contract.reply.SetReply getDefaultInstance() {
+  public static br.ufu.sd.api.contract.reply.DelReply getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<SetReply>
-      PARSER = new com.google.protobuf.AbstractParser<SetReply>() {
+  private static final com.google.protobuf.Parser<DelReply>
+      PARSER = new com.google.protobuf.AbstractParser<DelReply>() {
     @java.lang.Override
-    public SetReply parsePartialFrom(
+    public DelReply parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new SetReply(input, extensionRegistry);
+      return new DelReply(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<SetReply> parser() {
+  public static com.google.protobuf.Parser<DelReply> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<SetReply> getParserForType() {
+  public com.google.protobuf.Parser<DelReply> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public br.ufu.sd.api.contract.reply.SetReply getDefaultInstanceForType() {
+  public br.ufu.sd.api.contract.reply.DelReply getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

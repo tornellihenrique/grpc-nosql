@@ -7,8 +7,8 @@ import java.util.Map;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.ufu.sd.api.contract.request.SetRequest.BigInt;
 import br.ufu.sd.core.recovery.DatabaseRecovery;
+import br.ufu.sd.domain.model.BigInt;
 import br.ufu.sd.domain.model.Valor;
 
 public class HashDatabaseRecoveryBeanTestSuit {

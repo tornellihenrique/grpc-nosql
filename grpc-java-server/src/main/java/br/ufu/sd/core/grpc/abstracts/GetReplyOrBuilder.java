@@ -6,8 +6,8 @@ package br.ufu.sd.core.grpc.abstracts;
 import br.ufu.sd.domain.model.Exito;
 import br.ufu.sd.domain.model.Valor;
 
-public interface SetReplyOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:grpc.SetReply)
+public interface GetReplyOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:grpc.GetReply)
     com.google.protobuf.MessageOrBuilder {
 
   /**

@@ -4,29 +4,29 @@
 package br.ufu.sd.api.contract.request;
 
 import br.ufu.sd.core.grpc.NoSqlServiceProto;
-import br.ufu.sd.core.grpc.abstracts.SetRequestOrBuilder;
+import br.ufu.sd.core.grpc.abstracts.TestAndSetRequestOrBuilder;
 import br.ufu.sd.domain.model.BigInt;
 
 /**
- * Protobuf type {@code grpc.SetRequest}
+ * Protobuf type {@code grpc.TestAndSetRequest}
  */
-public final class SetRequest extends
+public final class TestAndSetRequest extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:grpc.SetRequest)
-    SetRequestOrBuilder {
+    // @@protoc_insertion_point(message_implements:grpc.TestAndSetRequest)
+    TestAndSetRequestOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use SetRequest.newBuilder() to construct.
-  private SetRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use TestAndSetRequest.newBuilder() to construct.
+  private TestAndSetRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private SetRequest() {
+  private TestAndSetRequest() {
   }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(
       UnusedPrivateParameter unused) {
-    return new SetRequest();
+    return new TestAndSetRequest();
   }
 
   @java.lang.Override
@@ -34,7 +34,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private SetRequest(
+  private TestAndSetRequest(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -83,6 +83,11 @@ private static final long serialVersionUID = 0L;
 
             break;
           }
+          case 32: {
+
+            versao_ = input.readInt64();
+            break;
+          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -104,15 +109,15 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_SetRequest_descriptor;
+    return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_TestAndSetRequest_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_SetRequest_fieldAccessorTable
+    return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_TestAndSetRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            br.ufu.sd.api.contract.request.SetRequest.class, br.ufu.sd.api.contract.request.SetRequest.Builder.class);
+            br.ufu.sd.api.contract.request.TestAndSetRequest.class, br.ufu.sd.api.contract.request.TestAndSetRequest.Builder.class);
   }
 
   public static final int CHAVE_FIELD_NUMBER = 1;
@@ -178,6 +183,17 @@ private static final long serialVersionUID = 0L;
     return getObjeto();
   }
 
+  public static final int VERSAO_FIELD_NUMBER = 4;
+  private long versao_;
+  /**
+   * <code>int64 versao = 4;</code>
+   * @return The versao.
+   */
+  @java.lang.Override
+  public long getVersao() {
+    return versao_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -201,6 +217,9 @@ private static final long serialVersionUID = 0L;
     if (objeto_ != null) {
       output.writeMessage(3, getObjeto());
     }
+    if (versao_ != 0L) {
+      output.writeInt64(4, versao_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -222,6 +241,10 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(3, getObjeto());
     }
+    if (versao_ != 0L) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt64Size(4, versao_);
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -232,10 +255,10 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof br.ufu.sd.api.contract.request.SetRequest)) {
+    if (!(obj instanceof br.ufu.sd.api.contract.request.TestAndSetRequest)) {
       return super.equals(obj);
     }
-    br.ufu.sd.api.contract.request.SetRequest other = (br.ufu.sd.api.contract.request.SetRequest) obj;
+    br.ufu.sd.api.contract.request.TestAndSetRequest other = (br.ufu.sd.api.contract.request.TestAndSetRequest) obj;
 
     if (hasChave() != other.hasChave()) return false;
     if (hasChave()) {
@@ -249,6 +272,8 @@ private static final long serialVersionUID = 0L;
       if (!getObjeto()
           .equals(other.getObjeto())) return false;
     }
+    if (getVersao()
+        != other.getVersao()) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -271,74 +296,77 @@ private static final long serialVersionUID = 0L;
       hash = (37 * hash) + OBJETO_FIELD_NUMBER;
       hash = (53 * hash) + getObjeto().hashCode();
     }
+    hash = (37 * hash) + VERSAO_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        getVersao());
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static br.ufu.sd.api.contract.request.SetRequest parseFrom(
+  public static br.ufu.sd.api.contract.request.TestAndSetRequest parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static br.ufu.sd.api.contract.request.SetRequest parseFrom(
+  public static br.ufu.sd.api.contract.request.TestAndSetRequest parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static br.ufu.sd.api.contract.request.SetRequest parseFrom(
+  public static br.ufu.sd.api.contract.request.TestAndSetRequest parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static br.ufu.sd.api.contract.request.SetRequest parseFrom(
+  public static br.ufu.sd.api.contract.request.TestAndSetRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static br.ufu.sd.api.contract.request.SetRequest parseFrom(byte[] data)
+  public static br.ufu.sd.api.contract.request.TestAndSetRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static br.ufu.sd.api.contract.request.SetRequest parseFrom(
+  public static br.ufu.sd.api.contract.request.TestAndSetRequest parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static br.ufu.sd.api.contract.request.SetRequest parseFrom(java.io.InputStream input)
+  public static br.ufu.sd.api.contract.request.TestAndSetRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static br.ufu.sd.api.contract.request.SetRequest parseFrom(
+  public static br.ufu.sd.api.contract.request.TestAndSetRequest parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static br.ufu.sd.api.contract.request.SetRequest parseDelimitedFrom(java.io.InputStream input)
+  public static br.ufu.sd.api.contract.request.TestAndSetRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static br.ufu.sd.api.contract.request.SetRequest parseDelimitedFrom(
+  public static br.ufu.sd.api.contract.request.TestAndSetRequest parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static br.ufu.sd.api.contract.request.SetRequest parseFrom(
+  public static br.ufu.sd.api.contract.request.TestAndSetRequest parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static br.ufu.sd.api.contract.request.SetRequest parseFrom(
+  public static br.ufu.sd.api.contract.request.TestAndSetRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -351,7 +379,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(br.ufu.sd.api.contract.request.SetRequest prototype) {
+  public static Builder newBuilder(br.ufu.sd.api.contract.request.TestAndSetRequest prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -367,26 +395,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code grpc.SetRequest}
+   * Protobuf type {@code grpc.TestAndSetRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:grpc.SetRequest)
-      br.ufu.sd.core.grpc.abstracts.SetRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:grpc.TestAndSetRequest)
+      br.ufu.sd.core.grpc.abstracts.TestAndSetRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_SetRequest_descriptor;
+      return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_TestAndSetRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_SetRequest_fieldAccessorTable
+      return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_TestAndSetRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              br.ufu.sd.api.contract.request.SetRequest.class, br.ufu.sd.api.contract.request.SetRequest.Builder.class);
+              br.ufu.sd.api.contract.request.TestAndSetRequest.class, br.ufu.sd.api.contract.request.TestAndSetRequest.Builder.class);
     }
 
-    // Construct using br.ufu.sd.core.grpc.SetRequest.newBuilder()
+    // Construct using br.ufu.sd.core.grpc.TestAndSetRequest.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -418,23 +446,25 @@ private static final long serialVersionUID = 0L;
         objeto_ = null;
         objetoBuilder_ = null;
       }
+      versao_ = 0L;
+
       return this;
     }
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_SetRequest_descriptor;
+      return br.ufu.sd.core.grpc.NoSqlServiceProto.internal_static_grpc_TestAndSetRequest_descriptor;
     }
 
     @java.lang.Override
-    public br.ufu.sd.api.contract.request.SetRequest getDefaultInstanceForType() {
-      return br.ufu.sd.api.contract.request.SetRequest.getDefaultInstance();
+    public br.ufu.sd.api.contract.request.TestAndSetRequest getDefaultInstanceForType() {
+      return br.ufu.sd.api.contract.request.TestAndSetRequest.getDefaultInstance();
     }
 
     @java.lang.Override
-    public br.ufu.sd.api.contract.request.SetRequest build() {
-      br.ufu.sd.api.contract.request.SetRequest result = buildPartial();
+    public br.ufu.sd.api.contract.request.TestAndSetRequest build() {
+      br.ufu.sd.api.contract.request.TestAndSetRequest result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -442,8 +472,8 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public br.ufu.sd.api.contract.request.SetRequest buildPartial() {
-      br.ufu.sd.api.contract.request.SetRequest result = new br.ufu.sd.api.contract.request.SetRequest(this);
+    public br.ufu.sd.api.contract.request.TestAndSetRequest buildPartial() {
+      br.ufu.sd.api.contract.request.TestAndSetRequest result = new br.ufu.sd.api.contract.request.TestAndSetRequest(this);
       if (chaveBuilder_ == null) {
         result.chave_ = chave_;
       } else {
@@ -455,6 +485,7 @@ private static final long serialVersionUID = 0L;
       } else {
         result.objeto_ = objetoBuilder_.build();
       }
+      result.versao_ = versao_;
       onBuilt();
       return result;
     }
@@ -493,16 +524,16 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof br.ufu.sd.api.contract.request.SetRequest) {
-        return mergeFrom((br.ufu.sd.api.contract.request.SetRequest)other);
+      if (other instanceof br.ufu.sd.api.contract.request.TestAndSetRequest) {
+        return mergeFrom((br.ufu.sd.api.contract.request.TestAndSetRequest)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(br.ufu.sd.api.contract.request.SetRequest other) {
-      if (other == br.ufu.sd.api.contract.request.SetRequest.getDefaultInstance()) return this;
+    public Builder mergeFrom(br.ufu.sd.api.contract.request.TestAndSetRequest other) {
+      if (other == br.ufu.sd.api.contract.request.TestAndSetRequest.getDefaultInstance()) return this;
       if (other.hasChave()) {
         mergeChave(other.getChave());
       }
@@ -511,6 +542,9 @@ private static final long serialVersionUID = 0L;
       }
       if (other.hasObjeto()) {
         mergeObjeto(other.getObjeto());
+      }
+      if (other.getVersao() != 0L) {
+        setVersao(other.getVersao());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -527,11 +561,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      br.ufu.sd.api.contract.request.SetRequest parsedMessage = null;
+      br.ufu.sd.api.contract.request.TestAndSetRequest parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (br.ufu.sd.api.contract.request.SetRequest) e.getUnfinishedMessage();
+        parsedMessage = (br.ufu.sd.api.contract.request.TestAndSetRequest) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -809,6 +843,37 @@ private static final long serialVersionUID = 0L;
       }
       return objetoBuilder_;
     }
+
+    private long versao_ ;
+    /**
+     * <code>int64 versao = 4;</code>
+     * @return The versao.
+     */
+    @java.lang.Override
+    public long getVersao() {
+      return versao_;
+    }
+    /**
+     * <code>int64 versao = 4;</code>
+     * @param value The versao to set.
+     * @return This builder for chaining.
+     */
+    public Builder setVersao(long value) {
+      
+      versao_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int64 versao = 4;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearVersao() {
+      
+      versao_ = 0L;
+      onChanged();
+      return this;
+    }
     @java.lang.Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -822,41 +887,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:grpc.SetRequest)
+    // @@protoc_insertion_point(builder_scope:grpc.TestAndSetRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:grpc.SetRequest)
-  private static final br.ufu.sd.api.contract.request.SetRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:grpc.TestAndSetRequest)
+  private static final br.ufu.sd.api.contract.request.TestAndSetRequest DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new br.ufu.sd.api.contract.request.SetRequest();
+    DEFAULT_INSTANCE = new br.ufu.sd.api.contract.request.TestAndSetRequest();
   }
 
-  public static br.ufu.sd.api.contract.request.SetRequest getDefaultInstance() {
+  public static br.ufu.sd.api.contract.request.TestAndSetRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<SetRequest>
-      PARSER = new com.google.protobuf.AbstractParser<SetRequest>() {
+  private static final com.google.protobuf.Parser<TestAndSetRequest>
+      PARSER = new com.google.protobuf.AbstractParser<TestAndSetRequest>() {
     @java.lang.Override
-    public SetRequest parsePartialFrom(
+    public TestAndSetRequest parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new SetRequest(input, extensionRegistry);
+      return new TestAndSetRequest(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<SetRequest> parser() {
+  public static com.google.protobuf.Parser<TestAndSetRequest> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<SetRequest> getParserForType() {
+  public com.google.protobuf.Parser<TestAndSetRequest> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public br.ufu.sd.api.contract.request.SetRequest getDefaultInstanceForType() {
+  public br.ufu.sd.api.contract.request.TestAndSetRequest getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

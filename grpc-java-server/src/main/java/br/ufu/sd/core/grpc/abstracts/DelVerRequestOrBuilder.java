@@ -5,8 +5,8 @@ package br.ufu.sd.core.grpc.abstracts;
 
 import br.ufu.sd.domain.model.BigInt;
 
-public interface SetRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:grpc.SetRequest)
+public interface DelVerRequestOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:grpc.DelVerRequest)
     com.google.protobuf.MessageOrBuilder {
 
   /**
@@ -25,23 +25,8 @@ public interface SetRequestOrBuilder extends
   br.ufu.sd.core.grpc.abstracts.BigIntOrBuilder getChaveOrBuilder();
 
   /**
-   * <code>int64 timestamp = 2;</code>
-   * @return The timestamp.
+   * <code>int64 versao = 2;</code>
+   * @return The versao.
    */
-  long getTimestamp();
-
-  /**
-   * <code>.google.protobuf.Struct objeto = 3;</code>
-   * @return Whether the objeto field is set.
-   */
-  boolean hasObjeto();
-  /**
-   * <code>.google.protobuf.Struct objeto = 3;</code>
-   * @return The objeto.
-   */
-  com.google.protobuf.Struct getObjeto();
-  /**
-   * <code>.google.protobuf.Struct objeto = 3;</code>
-   */
-  com.google.protobuf.StructOrBuilder getObjetoOrBuilder();
+  long getVersao();
 }

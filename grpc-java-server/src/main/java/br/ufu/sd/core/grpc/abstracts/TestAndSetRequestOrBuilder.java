@@ -5,8 +5,8 @@ package br.ufu.sd.core.grpc.abstracts;
 
 import br.ufu.sd.domain.model.BigInt;
 
-public interface SetRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:grpc.SetRequest)
+public interface TestAndSetRequestOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:grpc.TestAndSetRequest)
     com.google.protobuf.MessageOrBuilder {
 
   /**
@@ -44,4 +44,10 @@ public interface SetRequestOrBuilder extends
    * <code>.google.protobuf.Struct objeto = 3;</code>
    */
   com.google.protobuf.StructOrBuilder getObjetoOrBuilder();
+
+  /**
+   * <code>int64 versao = 4;</code>
+   * @return The versao.
+   */
+  long getVersao();
 }

@@ -21,8 +21,8 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import br.ufu.sd.api.contract.request.SetRequest;
 import br.ufu.sd.core.recovery.DatabaseRecovery;
+import br.ufu.sd.domain.model.BigInt;
 import br.ufu.sd.domain.model.Valor;
 import br.ufu.sd.domain.service.NoSqlServiceImpl;
 import io.grpc.Server;
@@ -40,7 +40,7 @@ public class NoSqlServer {
     /* The port on which the server should run */
     int port = 50051;
     server = ServerBuilder.forPort(port)
-        .addService(new NoSqlServiceImpl(new DatabaseRecovery<SetRequest.BigInt, Valor>(System.getProperty("user.dir") 
+        .addService(new NoSqlServiceImpl(new DatabaseRecovery<BigInt, Valor>(System.getProperty("user.dir") 
 				+ File.separatorChar + "grpc-java-server"
 				+ File.separatorChar + "src"
 				+ File.separatorChar + "main"

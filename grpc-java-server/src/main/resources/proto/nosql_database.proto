@@ -14,7 +14,6 @@
 syntax = "proto3";
 import "google/protobuf/struct.proto";
 
-
 option java_multiple_files = true;
 option java_package = "br.ufu.sd.core.grpc";
 option java_outer_classname = "NoSqlServiceProto";
@@ -29,33 +28,123 @@ service NoSqlService {
 	// metodo para salvar uma tupla no banco de dados NoSQL
 	rpc set(SetRequest) returns (SetReply) {}
 	
+	// metodo para buscar uma tupla no banco de dados NoSQL
+	rpc get(GetRequest) returns (GetReply) {}
+	
+	// metodo para excluir uma tupla no banco de dados NoSQL
+	rpc del(DelRequest) returns (DelReply) {}
+	
+	// metodo para excluir uma tupla se a versao corresponder no banco de dados NoSQL
+	rpc delVer(DelVerRequest) returns (DelVerReply) {}
+	
+	// metodo para salvar uma tupla no banco de dados NoSQL
+	rpc testAndSet(TestAndSetRequest) returns (TestAndSetReply) {}
 	
 	
 }
+
 	message SetRequest {
 		
-		BigInteger key = 1;
+		BigInt chave = 1;
+		
 		int64 timestamp = 2;
+		
 		google.protobuf.Struct objeto = 3;
 	}
+
+	message GetRequest {
+		
+		BigInt chave = 1;
+	}
+	
+	message DelRequest {
+		
+		BigInt chave = 1;
+	}
+	
+	message DelVerRequest {
+		
+		BigInt chave = 1;
+		
+		int64 versao = 2;
+	}
+	
+	message TestAndSetRequest {
+		
+		BigInt chave = 1;
+		
+		int64 timestamp = 2;
+		
+		google.protobuf.Struct objeto = 3;
+		
+		int64 versao = 4;
+	}
+	
+	
+	
+	
+	
 	
 	message SetReply {
 		
-		enum Exito {
-			ERROR = 0;
-			SUCCESS = 1;
-		}
+		Exito exito = 1;
+		
+		Valor valor = 2;
+		
+	}
+	
+	message GetReply {
 		
 		Exito exito = 1;
+		
 		Valor valor = 2;
+		
+	}
+	
+	message DelReply {
+		
+		Exito exito = 1;
+		
+		Valor valor = 2;
+		
+	}
+	
+	message DelVerReply {
+		
+		Exito exito = 1;
+		
+		Valor valor = 2;
+		
+	}
+	
+	message TestAndSetReply {
+		
+		Exito exito = 1;
+		
+		Valor valor = 2;
+		
 	}
 	
 	message Valor {
+		
 		int64 versao = 1;
+		
 		int64 timestamp = 2;
+		
 		google.protobuf.Struct objeto = 3;
+		
 	}
 	
-	message BigInteger {
+	message BigInt {
+		
 		bytes value = 1;
+		
 	}
+	
+	enum Exito {
+		ERROR = 0;
+		SUCCESS = 1;
+		ERROR_NE = 2;
+		ERROR_WV = 3;
+	}
+	
