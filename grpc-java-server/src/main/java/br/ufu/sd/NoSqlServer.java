@@ -41,8 +41,9 @@ public class NoSqlServer {
     int port = 50051;
     server = ServerBuilder.forPort(port)
         .addService(new NoSqlServiceImpl(new DatabaseRecovery<SetRequest.BigInt, Valor>(System.getProperty("user.dir") 
-				+ File.separatorChar + "src" 
-				+ File.separatorChar + "main" 
+				+ File.separatorChar + "grpc-java-server"
+				+ File.separatorChar + "src"
+				+ File.separatorChar + "main"
 				+ File.separatorChar + "resources" 
 				+ File.separatorChar + "db" 
 				+ File.separatorChar + "nosql_database2.backup")))
