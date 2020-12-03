@@ -1,9 +1,7 @@
 package br.ufu.sd.core.shell;
 
-import br.ufu.sd.NoSqlClient;
+import br.ufu.sd.domain.service.NoSqlService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.google.protobuf.ListValue;
 import com.google.protobuf.Struct;
 import com.google.protobuf.Value;
@@ -34,13 +32,13 @@ public class GrpcShell {
         public static final String TEST_GET = SLASH + "testGet";
     }
 
-    private final NoSqlClient client;
+    private final NoSqlService client;
 
     private final String user;
 
     private final Scanner sc = new Scanner(System.in);
 
-    public GrpcShell(NoSqlClient client, String user) {
+    public GrpcShell(NoSqlService client, String user) {
         this.client = client;
         this.user = user;
     }
