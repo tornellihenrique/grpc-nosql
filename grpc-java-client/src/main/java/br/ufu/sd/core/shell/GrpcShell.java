@@ -4,14 +4,13 @@ import br.ufu.sd.NoSqlClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.protobuf.ListValue;
 import com.google.protobuf.Struct;
 import com.google.protobuf.Value;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GrpcShell {
@@ -86,7 +85,7 @@ public class GrpcShell {
                 continue;
             }
 
-            // /set 111 {"string":"abc","int":123,"float":1.23,"estrutura":{"teste":"uai"}}
+            // /set 111 {"array":["a","b","c"],"string":"abc","int":123,"float":1.23,"estrutura":{"teste":"uai"}}
             if (input.startsWith(Commands.SET)) {
                 try {
                     String aux = input.replace(Commands.SET + " ", "");
@@ -121,6 +120,10 @@ public class GrpcShell {
     private Value getValueFromData(Object obj) {
         if (obj instanceof Map) {
             return Value.newBuilder().setStructValue(Struct.newBuilder().putAllFields(getMapFromData((Map<String, Object>) obj)).build()).build();
+        }
+
+        if (obj instanceof List) {
+            return Value.newBuilder().setListValue(ListValue.newBuilder().addAllValues(((List<Object>) obj).stream().map(this::getValueFromData).collect(Collectors.toList())).build()).build();
         }
 
         if (obj instanceof Integer) {
