@@ -51,10 +51,10 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 								.setValor(valorExistente)
 						    		.build();
 			}else {
-				
-				database.put(request.getChave(), 
+				synchronized (valorExistente) {
+					database.put(request.getChave(), 
 							Valor.newBuilder(valorExistente).setVersao(valorExistente.getVersao()+1).setObjeto(request.getObjeto()).build());
-				
+				}
 				
 				reply = SetReply
 						.newBuilder()
@@ -65,18 +65,18 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 		}
 		responseObserver.onNext(reply);
 		responseObserver.onCompleted();
-		databaseRecovery.backup(database);
+		synchronized (databaseRecovery) {
+			databaseRecovery.backup(database);
+		}
 	}
 
 	@Override
 	public void get(GetRequest request, StreamObserver<GetReply> responseObserver) {
 		if (database.containsKey(request.getChave())) {
-			
 			responseObserver.onNext(GetReply.newBuilder()
 					.setExito(Exito.SUCCESS)
 					.setValor(database.get(request.getChave()))
 					.build());
-			
 			responseObserver.onCompleted();
 
 			return;
@@ -89,11 +89,13 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 	}
 
 	@Override
-	public synchronized void del(DelRequest request, StreamObserver<DelReply> responseObserver) {
+	public void del(DelRequest request, StreamObserver<DelReply> responseObserver) {
 		if (database.containsKey(request.getChave())) {
 			Valor valor = database.get(request.getChave());
 
-			database.remove(request.getChave());
+			synchronized (valor) {
+				database.remove(request.getChave());
+			}
 
 			responseObserver.onNext(DelReply.newBuilder()
 					.setExito(Exito.SUCCESS)
@@ -111,13 +113,14 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 	}
 
 	@Override
-	public synchronized void delVer(DelVerRequest request, StreamObserver<DelVerReply> responseObserver) {
+	public void delVer(DelVerRequest request, StreamObserver<DelVerReply> responseObserver) {
 		if (database.containsKey(request.getChave())) {
 			Valor valor = database.get(request.getChave());
 
 			if (valor.getVersao() == request.getVersao()) {
-				
-				database.remove(request.getChave());
+				synchronized (valor) {
+					database.remove(request.getChave());
+				}
 
 				responseObserver.onNext(DelVerReply.newBuilder()
 						.setExito(Exito.SUCCESS)
@@ -142,16 +145,17 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 	}
 
 	@Override
-	public synchronized void testAndSet(TestAndSetRequest request, StreamObserver<TestAndSetReply> responseObserver) {
+	public void testAndSet(TestAndSetRequest request, StreamObserver<TestAndSetReply> responseObserver) {
 		if (database.containsKey(request.getChave())) {
 			Valor valor = database.get(request.getChave());
 
 			if (valor.getVersao() == request.getVersao()) {
-				
-				database.put(request.getChave(), Valor.newBuilder(valor)
+				synchronized (valor) {
+					database.put(request.getChave(), Valor.newBuilder(valor)
 							.setVersao(valor.getVersao())
 							.setObjeto(request.getObjeto())
 							.build());
+				}
 
 				responseObserver.onNext(TestAndSetReply.newBuilder()
 						.setExito(Exito.SUCCESS)
