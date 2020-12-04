@@ -7,7 +7,7 @@ import java.util.Map;
 import br.ufu.sd.api.contract.reply.*;
 import br.ufu.sd.api.contract.request.*;
 import br.ufu.sd.core.grpc.NoSqlServiceGrpc.NoSqlServiceImplBase;
-import br.ufu.sd.core.recovery.DatabaseRecovery;
+import br.ufu.sd.core.maintenance.DatabaseMaintenance;
 import br.ufu.sd.domain.model.BigInt;
 import br.ufu.sd.domain.model.Exito;
 import br.ufu.sd.domain.model.Valor;
@@ -16,10 +16,10 @@ import io.grpc.stub.StreamObserver;
 public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 
 	private final Map<BigInt, Valor> database;
-	private final DatabaseRecovery<BigInt, Valor> databaseRecovery;
+	private final DatabaseMaintenance<BigInt, Valor> databaseRecovery;
 	
 
-	public NoSqlServiceImpl(DatabaseRecovery<BigInt, Valor> databaseRecovery) {
+	public NoSqlServiceImpl(DatabaseMaintenance<BigInt, Valor> databaseRecovery) {
 		this.databaseRecovery = databaseRecovery;
 		this.database = databaseRecovery.recover();
 	}
@@ -173,5 +173,9 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 				.setExito(Exito.ERROR_NE)
 				.build());
 		responseObserver.onCompleted();
+	}
+	
+	public Map<BigInt, Valor> getDatabase(){
+		return database;
 	}
 }

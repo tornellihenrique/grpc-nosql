@@ -7,17 +7,17 @@ import java.util.Map;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.ufu.sd.core.recovery.DatabaseRecovery;
+import br.ufu.sd.core.maintenance.DatabaseMaintenance;
 import br.ufu.sd.domain.model.BigInt;
 import br.ufu.sd.domain.model.Valor;
 
 public class HashDatabaseRecoveryBeanTestSuit {
 
-	private static DatabaseRecovery<BigInt, Valor> databaseRecoveryBean;
+	private static DatabaseMaintenance<BigInt, Valor> databaseRecoveryBean;
 	
 	@BeforeClass
 	public static void prepararBeanParaRecuperacaoDeDatabase() {
-		databaseRecoveryBean = new DatabaseRecovery<BigInt,Valor>(
+		databaseRecoveryBean = new DatabaseMaintenance<BigInt,Valor>(
 				(System.getProperty("user.dir") 
 				+ File.separatorChar + "src" 
 				+ File.separatorChar + "main" 

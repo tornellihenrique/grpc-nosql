@@ -18,10 +18,12 @@ package br.ufu.sd;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import br.ufu.sd.core.recovery.DatabaseRecovery;
+import br.ufu.sd.core.maintenance.DatabaseBackupTask;
+import br.ufu.sd.core.maintenance.DatabaseMaintenance;
 import br.ufu.sd.domain.model.BigInt;
 import br.ufu.sd.domain.model.Valor;
 import br.ufu.sd.domain.service.NoSqlServiceImpl;
@@ -39,17 +41,29 @@ public class NoSqlServer {
   private void start() throws IOException {
     /* The port on which the server should run */
     int port = 50051;
+    
+    DatabaseMaintenance<BigInt, Valor> maintenanceBean = new DatabaseMaintenance<BigInt, Valor>(System.getProperty("user.dir")
+			+ File.separatorChar + "src"
+			+ File.separatorChar + "main"
+			+ File.separatorChar + "resources" 
+			+ File.separatorChar + "db" 
+			+ File.separatorChar + "nosql_database2.backup");
+    
+    NoSqlServiceImpl noSqlService = new NoSqlServiceImpl(maintenanceBean);
+    
+    Timer serverMaintainanceTimer = new Timer();
+    
+    serverMaintainanceTimer.schedule(
+    		new DatabaseBackupTask(noSqlService.getDatabase(), maintenanceBean), 5_000, 5_000);
+    
     server = ServerBuilder.forPort(port)
-        .addService(new NoSqlServiceImpl(new DatabaseRecovery<BigInt, Valor>(System.getProperty("user.dir") 
-				+ File.separatorChar + "grpc-java-server"
-				+ File.separatorChar + "src"
-				+ File.separatorChar + "main"
-				+ File.separatorChar + "resources" 
-				+ File.separatorChar + "db" 
-				+ File.separatorChar + "nosql_database2.backup")))
+        .addService(noSqlService)
         .build()
         .start();
+    
     logger.info("Server started, listening on " + port);
+    
+    
     Runtime.getRuntime().addShutdownHook(new Thread() {
       @Override
       public void run() {
@@ -57,6 +71,7 @@ public class NoSqlServer {
         System.err.println("*** shutting down gRPC server since JVM is shutting down");
         try {
         	NoSqlServer.this.stop();
+        	serverMaintainanceTimer.cancel();
         } catch (InterruptedException e) {
           e.printStackTrace(System.err);
         }

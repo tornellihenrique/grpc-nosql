@@ -1,4 +1,4 @@
-package br.ufu.sd.core.recovery;
+package br.ufu.sd.core.maintenance;
 
 import java.io.EOFException;
 import java.io.File;
@@ -13,12 +13,12 @@ import java.util.logging.Logger;
 
 import br.ufu.sd.domain.service.NoSqlServiceImpl;
 
-public class DatabaseRecovery<K,V> {
+public class DatabaseMaintenance<K,V> {
 
 	private final File backupFile;
 	private static final Logger logger = Logger.getLogger(NoSqlServiceImpl.class.getName());
 	
-	public DatabaseRecovery(String backupFilePath) {
+	public DatabaseMaintenance(String backupFilePath) {
 		this.backupFile = new File(backupFilePath);
 	}
 	
