@@ -19,7 +19,7 @@ public class DatabaseBackupTask extends TimerTask{
 	
 	@Override
 	public void run() {
-		// segurando o banco de dados até que a tarefa de manutenção seja completada
+		// segurando o banco de dados ate que a tarefa de manutencao seja completada
 		synchronized (database) {
 			databaseMaintenanceBean.backup(database);
 		}

@@ -51,7 +51,7 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 								.setValor(valorExistente)
 						    		.build();
 			}else {
-				synchronized (valorExistente) {
+				synchronized (database) {
 					database.put(request.getChave(), 
 							Valor.newBuilder(valorExistente).setVersao(valorExistente.getVersao()+1).setObjeto(request.getObjeto()).build());
 				}
@@ -93,7 +93,7 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 		if (database.containsKey(request.getChave())) {
 			Valor valor = database.get(request.getChave());
 
-			synchronized (valor) {
+			synchronized (database) {
 				database.remove(request.getChave());
 			}
 
@@ -118,7 +118,7 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 			Valor valor = database.get(request.getChave());
 
 			if (valor.getVersao() == request.getVersao()) {
-				synchronized (valor) {
+				synchronized (database) {
 					database.remove(request.getChave());
 				}
 
@@ -150,7 +150,7 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 			Valor valor = database.get(request.getChave());
 
 			if (valor.getVersao() == request.getVersao()) {
-				synchronized (valor) {
+				synchronized (database) {
 					database.put(request.getChave(), Valor.newBuilder(valor)
 							.setVersao(valor.getVersao())
 							.setObjeto(request.getObjeto())
