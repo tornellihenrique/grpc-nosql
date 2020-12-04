@@ -30,6 +30,12 @@ public class GrpcShell {
 
         public static final String GET = SLASH + "get";
 
+        public static final String DEL = SLASH + "del";
+
+        public static final String DEL_VER = SLASH + "delVer";
+
+        public static final String TEST_AND_SET = SLASH + "testAndSet";
+
         // Tests
         public static final String TEST_SET = SLASH + "testSet";
 
@@ -83,9 +89,15 @@ public class GrpcShell {
                         "\n" +
                         "* API do Banco de Dados\n" +
                         "\t- /set {key} {data:json}\n" +
-                        "\t\t> Insere na chave {key} a informação {data} sendo ela feita no padrão JSON (JavaScript Object Notation)\n" +
+                        "\t\t> Insere na chave {key} a informação {data}, sendo a mesma feita no padrão JSON (JavaScript Object Notation)\n" +
                         "\t- /get {key}\n" +
                         "\t\t> Retorna a informação armazenada na chave {key}\n" +
+                        "\t- /del {key}\n" +
+                        "\t\t> Remove a informação armazenada na chave {key}\n" +
+                        "\t- /delVer {key} {ver}\n" +
+                        "\t\t> Retorna a informação armazenada na chave {key} caso a mesma esteja na versão {ver}\n" +
+                        "\t- /testAndSet {key} {ver} {data:json}\n" +
+                        "\t\t> Insere na chave {key} a informação {data} caso a mesma esteja na versão {ver} e tenha sido feita no padrão JSON (JavaScript Object Notation)\n" +
                         "\n" +
                         "* Testes do Banco de Dados\n" +
                         "\t- /testSet\n" +
@@ -101,13 +113,28 @@ public class GrpcShell {
                 continue;
             }
 
-            if (input.startsWith(Commands.SET)) {
+            if (input.startsWith(Commands.SET + " ")) {
                 set(input);
                 continue;
             }
 
-            if (input.startsWith(Commands.GET)) {
+            if (input.startsWith(Commands.GET + " ")) {
                 get(input);
+                continue;
+            }
+
+            if (input.startsWith(Commands.DEL + " ")) {
+                del(input);
+                continue;
+            }
+
+            if (input.startsWith(Commands.DEL_VER + " ")) {
+                delVer(input);
+                continue;
+            }
+
+            if (input.startsWith(Commands.TEST_AND_SET + " ")) {
+                testAndSet(input);
                 continue;
             }
 
@@ -119,10 +146,10 @@ public class GrpcShell {
     // SET
     private void set(String input) {
         try {
-            String aux = input.replace(Commands.SET + " ", "");
+            String aux = input.replaceFirst(Commands.SET + " ", "");
 
             BigInteger key = new BigInteger(aux.split(" ")[0]);
-            String dataStr = aux.replace(key.toString() + " ", "");
+            String dataStr = aux.replaceFirst(key.toString() + " ", "");
 
             Map<String, Object> data = new ObjectMapper().readValue(dataStr, Map.class);
             Map<String, Value> struct = getMapFromData(data);
@@ -136,11 +163,59 @@ public class GrpcShell {
     // GET
     private void get(String input) {
         try {
-            String aux = input.replace(Commands.GET + " ", "");
+            String aux = input.replaceFirst(Commands.GET + " ", "");
+
+            BigInteger key = new BigInteger(aux);
+
+            System.out.println(client.get(key));
+        } catch (Exception e) {
+            System.out.println("Padrão de parâmetros inválidos");
+        }
+    }
+
+    // DEL
+    private void del(String input) {
+        try {
+            String aux = input.replaceFirst(Commands.DEL + " ", "");
 
             BigInteger key = new BigInteger(aux.split(" ")[0]);
 
-            System.out.println(client.get(key));
+            System.out.println(client.del(key));
+        } catch (Exception e) {
+            System.out.println("Padrão de parâmetros inválidos");
+        }
+    }
+
+    // DEL VER
+    private void delVer(String input) {
+        try {
+            String aux = input.replaceFirst(Commands.DEL_VER + " ", "");
+
+            BigInteger key = new BigInteger(aux.split(" ")[0]);
+            Long ver = Long.parseLong(aux.split(" ")[1]);
+
+            System.out.println(client.delVer(key, ver));
+        } catch (Exception e) {
+            System.out.println("Padrão de parâmetros inválidos");
+        }
+    }
+
+    // TEST AND SET
+    private void testAndSet(String input) {
+        try {
+            String aux = input.replaceFirst(Commands.TEST_AND_SET + " ", "");
+
+            BigInteger key = new BigInteger(aux.split(" ")[0]);
+            aux = aux.replaceFirst(key.toString() + " ", "");
+
+            Long ver = Long.parseLong(aux.split(" ")[0]);
+
+            String dataStr = aux.replaceFirst(ver.toString() + " ", "");
+
+            Map<String, Object> data = new ObjectMapper().readValue(dataStr, Map.class);
+            Map<String, Value> struct = getMapFromData(data);
+
+            System.out.println(client.testAndSet(key, ver, struct));
         } catch (Exception e) {
             System.out.println("Padrão de parâmetros inválidos");
         }
