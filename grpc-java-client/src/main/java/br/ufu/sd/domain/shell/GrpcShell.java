@@ -1,4 +1,4 @@
-package br.ufu.sd.core.shell;
+package br.ufu.sd.domain.shell;
 
 import br.ufu.sd.domain.service.NoSqlService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,7 +6,9 @@ import com.google.protobuf.ListValue;
 import com.google.protobuf.Struct;
 import com.google.protobuf.Value;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,6 +22,8 @@ public class GrpcShell {
         public static final String HELP = SLASH + "help";
 
         public static final String EXIT = SLASH + "exit";
+
+        public static final String CLEAR = SLASH + "clear";
 
         // API
         public static final String SET = SLASH + "set";
@@ -44,6 +48,8 @@ public class GrpcShell {
     }
 
     public void start() {
+//        handleSignals();
+
         System.out.print("##########################################\n" +
                 "########### NOSQL SHELL CLIENT ###########\n" +
                 "##########################################\n" +
@@ -68,6 +74,13 @@ public class GrpcShell {
             if (input.startsWith(Commands.HELP)) {
                 System.out.println("Comandos disponíveis:\n" +
                         "\n" +
+                        "* /help\n" +
+                        "\t- Lista os comandos possíveis\n" +
+                        "* /clear\n" +
+                        "\t- Limpa o shell\n" +
+                        "* /exit\n" +
+                        "\t- Finaliza o shell\n" +
+                        "\n" +
                         "* API do Banco de Dados\n" +
                         "\t- /set {key} {data:json}\n" +
                         "\t\t> Insere na chave {key} a informação {data} sendo ela feita no padrão JSON (JavaScript Object Notation)\n" +
@@ -83,26 +96,53 @@ public class GrpcShell {
                 continue;
             }
 
-            // /set 111 {"array":["a","b","c"],"string":"abc","int":123,"float":1.23,"estrutura":{"teste":"uai"}}
+            if (input.startsWith(Commands.CLEAR)) {
+                clear();
+                continue;
+            }
+
             if (input.startsWith(Commands.SET)) {
-                try {
-                    String aux = input.replace(Commands.SET + " ", "");
+                set(input);
+                continue;
+            }
 
-                    BigInteger key = new BigInteger(aux.split(" ")[0]);
-                    String dataStr = aux.replace(key.toString() + " ", "");
-
-                    Map<String, Object> data = new ObjectMapper().readValue(dataStr, Map.class);
-                    Map<String, Value> struct = getMapFromData(data);
-
-                    client.set(key, struct);
-                } catch (Exception e) {
-                    System.out.println("Padrão de parâmetros inválidos");
-                }
-
+            if (input.startsWith(Commands.GET)) {
+                get(input);
                 continue;
             }
 
             System.out.println("Comando inválido ಠ_ಠ"); //TODO Remover emoji
+        }
+    }
+
+    // /set 111 {"array":["a","b","c"],"string":"abc","int":123,"float":1.23,"estrutura":{"teste":"uai"}}
+    // SET
+    private void set(String input) {
+        try {
+            String aux = input.replace(Commands.SET + " ", "");
+
+            BigInteger key = new BigInteger(aux.split(" ")[0]);
+            String dataStr = aux.replace(key.toString() + " ", "");
+
+            Map<String, Object> data = new ObjectMapper().readValue(dataStr, Map.class);
+            Map<String, Value> struct = getMapFromData(data);
+
+            System.out.println(client.set(key, struct));
+        } catch (Exception e) {
+            System.out.println("Padrão de parâmetros inválidos");
+        }
+    }
+
+    // GET
+    private void get(String input) {
+        try {
+            String aux = input.replace(Commands.GET + " ", "");
+
+            BigInteger key = new BigInteger(aux.split(" ")[0]);
+
+            System.out.println(client.get(key));
+        } catch (Exception e) {
+            System.out.println("Padrão de parâmetros inválidos");
         }
     }
 
@@ -142,6 +182,10 @@ public class GrpcShell {
     private void clear() {
         try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            Runtime.getRuntime().exec("cls");
+            System.out.print("\033[H\033[2J");
+            System.out.println("\f");
+            System.out.flush();
         } catch (InterruptedException | IOException e) {
             System.out.println();
         }

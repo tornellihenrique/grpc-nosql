@@ -4,29 +4,29 @@
 package br.ufu.sd.api.contract.request;
 
 import br.ufu.sd.core.grpc.NoSqlServiceProto;
-import br.ufu.sd.core.grpc.abstracts.SetRequestOrBuilder;
+import br.ufu.sd.core.grpc.abstracts.DelVerRequestOrBuilder;
 import br.ufu.sd.domain.model.BigInt;
 
 /**
- * Protobuf type {@code grpc.SetRequest}
+ * Protobuf type {@code grpc.DelVerRequest}
  */
-public final class SetRequest extends
+public final class DelVerRequest extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:grpc.SetRequest)
-    SetRequestOrBuilder {
+    // @@protoc_insertion_point(message_implements:grpc.DelVerRequest)
+    DelVerRequestOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use SetRequest.newBuilder() to construct.
-  private SetRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use DelVerRequest.newBuilder() to construct.
+  private DelVerRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private SetRequest() {
+  private DelVerRequest() {
   }
 
   @Override
   @SuppressWarnings({"unused"})
   protected Object newInstance(
       UnusedPrivateParameter unused) {
-    return new SetRequest();
+    return new DelVerRequest();
   }
 
   @Override
@@ -34,7 +34,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private SetRequest(
+  private DelVerRequest(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -67,20 +67,7 @@ private static final long serialVersionUID = 0L;
           }
           case 16: {
 
-            timestamp_ = input.readInt64();
-            break;
-          }
-          case 26: {
-            com.google.protobuf.Struct.Builder subBuilder = null;
-            if (objeto_ != null) {
-              subBuilder = objeto_.toBuilder();
-            }
-            objeto_ = input.readMessage(com.google.protobuf.Struct.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(objeto_);
-              objeto_ = subBuilder.buildPartial();
-            }
-
+            versao_ = input.readInt64();
             break;
           }
           default: {
@@ -104,15 +91,15 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return NoSqlServiceProto.internal_static_grpc_SetRequest_descriptor;
+    return NoSqlServiceProto.internal_static_grpc_DelVerRequest_descriptor;
   }
 
   @Override
   protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return NoSqlServiceProto.internal_static_grpc_SetRequest_fieldAccessorTable
+    return NoSqlServiceProto.internal_static_grpc_DelVerRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            SetRequest.class, Builder.class);
+            DelVerRequest.class, Builder.class);
   }
 
   public static final int CHAVE_FIELD_NUMBER = 1;
@@ -141,41 +128,15 @@ private static final long serialVersionUID = 0L;
     return getChave();
   }
 
-  public static final int TIMESTAMP_FIELD_NUMBER = 2;
-  private long timestamp_;
+  public static final int VERSAO_FIELD_NUMBER = 2;
+  private long versao_;
   /**
-   * <code>int64 timestamp = 2;</code>
-   * @return The timestamp.
+   * <code>int64 versao = 2;</code>
+   * @return The versao.
    */
   @Override
-  public long getTimestamp() {
-    return timestamp_;
-  }
-
-  public static final int OBJETO_FIELD_NUMBER = 3;
-  private com.google.protobuf.Struct objeto_;
-  /**
-   * <code>.google.protobuf.Struct objeto = 3;</code>
-   * @return Whether the objeto field is set.
-   */
-  @Override
-  public boolean hasObjeto() {
-    return objeto_ != null;
-  }
-  /**
-   * <code>.google.protobuf.Struct objeto = 3;</code>
-   * @return The objeto.
-   */
-  @Override
-  public com.google.protobuf.Struct getObjeto() {
-    return objeto_ == null ? com.google.protobuf.Struct.getDefaultInstance() : objeto_;
-  }
-  /**
-   * <code>.google.protobuf.Struct objeto = 3;</code>
-   */
-  @Override
-  public com.google.protobuf.StructOrBuilder getObjetoOrBuilder() {
-    return getObjeto();
+  public long getVersao() {
+    return versao_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -195,11 +156,8 @@ private static final long serialVersionUID = 0L;
     if (chave_ != null) {
       output.writeMessage(1, getChave());
     }
-    if (timestamp_ != 0L) {
-      output.writeInt64(2, timestamp_);
-    }
-    if (objeto_ != null) {
-      output.writeMessage(3, getObjeto());
+    if (versao_ != 0L) {
+      output.writeInt64(2, versao_);
     }
     unknownFields.writeTo(output);
   }
@@ -214,13 +172,9 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(1, getChave());
     }
-    if (timestamp_ != 0L) {
+    if (versao_ != 0L) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt64Size(2, timestamp_);
-    }
-    if (objeto_ != null) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(3, getObjeto());
+        .computeInt64Size(2, versao_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -232,23 +186,18 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof SetRequest)) {
+    if (!(obj instanceof DelVerRequest)) {
       return super.equals(obj);
     }
-    SetRequest other = (SetRequest) obj;
+    DelVerRequest other = (DelVerRequest) obj;
 
     if (hasChave() != other.hasChave()) return false;
     if (hasChave()) {
       if (!getChave()
           .equals(other.getChave())) return false;
     }
-    if (getTimestamp()
-        != other.getTimestamp()) return false;
-    if (hasObjeto() != other.hasObjeto()) return false;
-    if (hasObjeto()) {
-      if (!getObjeto()
-          .equals(other.getObjeto())) return false;
-    }
+    if (getVersao()
+        != other.getVersao()) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -264,81 +213,77 @@ private static final long serialVersionUID = 0L;
       hash = (37 * hash) + CHAVE_FIELD_NUMBER;
       hash = (53 * hash) + getChave().hashCode();
     }
-    hash = (37 * hash) + TIMESTAMP_FIELD_NUMBER;
+    hash = (37 * hash) + VERSAO_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        getTimestamp());
-    if (hasObjeto()) {
-      hash = (37 * hash) + OBJETO_FIELD_NUMBER;
-      hash = (53 * hash) + getObjeto().hashCode();
-    }
+        getVersao());
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static SetRequest parseFrom(
+  public static DelVerRequest parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static SetRequest parseFrom(
+  public static DelVerRequest parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static SetRequest parseFrom(
+  public static DelVerRequest parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static SetRequest parseFrom(
+  public static DelVerRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static SetRequest parseFrom(byte[] data)
+  public static DelVerRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static SetRequest parseFrom(
+  public static DelVerRequest parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static SetRequest parseFrom(java.io.InputStream input)
+  public static DelVerRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static SetRequest parseFrom(
+  public static DelVerRequest parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static SetRequest parseDelimitedFrom(java.io.InputStream input)
+  public static DelVerRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static SetRequest parseDelimitedFrom(
+  public static DelVerRequest parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static SetRequest parseFrom(
+  public static DelVerRequest parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static SetRequest parseFrom(
+  public static DelVerRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -351,7 +296,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(SetRequest prototype) {
+  public static Builder newBuilder(DelVerRequest prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @Override
@@ -367,26 +312,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code grpc.SetRequest}
+   * Protobuf type {@code grpc.DelVerRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:grpc.SetRequest)
-      SetRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:grpc.DelVerRequest)
+      br.ufu.sd.core.grpc.abstracts.DelVerRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return NoSqlServiceProto.internal_static_grpc_SetRequest_descriptor;
+      return NoSqlServiceProto.internal_static_grpc_DelVerRequest_descriptor;
     }
 
     @Override
     protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return NoSqlServiceProto.internal_static_grpc_SetRequest_fieldAccessorTable
+      return NoSqlServiceProto.internal_static_grpc_DelVerRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              SetRequest.class, Builder.class);
+              DelVerRequest.class, Builder.class);
     }
 
-    // Construct using br.ufu.sd.core.grpc.SetRequest.newBuilder()
+    // Construct using br.ufu.sd.core.grpc.DelVerRequest.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -410,31 +355,25 @@ private static final long serialVersionUID = 0L;
         chave_ = null;
         chaveBuilder_ = null;
       }
-      timestamp_ = 0L;
+      versao_ = 0L;
 
-      if (objetoBuilder_ == null) {
-        objeto_ = null;
-      } else {
-        objeto_ = null;
-        objetoBuilder_ = null;
-      }
       return this;
     }
 
     @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return NoSqlServiceProto.internal_static_grpc_SetRequest_descriptor;
+      return NoSqlServiceProto.internal_static_grpc_DelVerRequest_descriptor;
     }
 
     @Override
-    public SetRequest getDefaultInstanceForType() {
-      return SetRequest.getDefaultInstance();
+    public DelVerRequest getDefaultInstanceForType() {
+      return DelVerRequest.getDefaultInstance();
     }
 
     @Override
-    public SetRequest build() {
-      SetRequest result = buildPartial();
+    public DelVerRequest build() {
+      DelVerRequest result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -442,19 +381,14 @@ private static final long serialVersionUID = 0L;
     }
 
     @Override
-    public SetRequest buildPartial() {
-      SetRequest result = new SetRequest(this);
+    public DelVerRequest buildPartial() {
+      DelVerRequest result = new DelVerRequest(this);
       if (chaveBuilder_ == null) {
         result.chave_ = chave_;
       } else {
         result.chave_ = chaveBuilder_.build();
       }
-      result.timestamp_ = timestamp_;
-      if (objetoBuilder_ == null) {
-        result.objeto_ = objeto_;
-      } else {
-        result.objeto_ = objetoBuilder_.build();
-      }
+      result.versao_ = versao_;
       onBuilt();
       return result;
     }
@@ -493,24 +427,21 @@ private static final long serialVersionUID = 0L;
     }
     @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof SetRequest) {
-        return mergeFrom((SetRequest)other);
+      if (other instanceof DelVerRequest) {
+        return mergeFrom((DelVerRequest)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(SetRequest other) {
-      if (other == SetRequest.getDefaultInstance()) return this;
+    public Builder mergeFrom(DelVerRequest other) {
+      if (other == DelVerRequest.getDefaultInstance()) return this;
       if (other.hasChave()) {
         mergeChave(other.getChave());
       }
-      if (other.getTimestamp() != 0L) {
-        setTimestamp(other.getTimestamp());
-      }
-      if (other.hasObjeto()) {
-        mergeObjeto(other.getObjeto());
+      if (other.getVersao() != 0L) {
+        setVersao(other.getVersao());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -527,11 +458,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      SetRequest parsedMessage = null;
+      DelVerRequest parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (SetRequest) e.getUnfinishedMessage();
+        parsedMessage = (DelVerRequest) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -660,154 +591,35 @@ private static final long serialVersionUID = 0L;
       return chaveBuilder_;
     }
 
-    private long timestamp_ ;
+    private long versao_ ;
     /**
-     * <code>int64 timestamp = 2;</code>
-     * @return The timestamp.
+     * <code>int64 versao = 2;</code>
+     * @return The versao.
      */
     @Override
-    public long getTimestamp() {
-      return timestamp_;
+    public long getVersao() {
+      return versao_;
     }
     /**
-     * <code>int64 timestamp = 2;</code>
-     * @param value The timestamp to set.
+     * <code>int64 versao = 2;</code>
+     * @param value The versao to set.
      * @return This builder for chaining.
      */
-    public Builder setTimestamp(long value) {
+    public Builder setVersao(long value) {
       
-      timestamp_ = value;
+      versao_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int64 timestamp = 2;</code>
+     * <code>int64 versao = 2;</code>
      * @return This builder for chaining.
      */
-    public Builder clearTimestamp() {
+    public Builder clearVersao() {
       
-      timestamp_ = 0L;
+      versao_ = 0L;
       onChanged();
       return this;
-    }
-
-    private com.google.protobuf.Struct objeto_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.protobuf.Struct, com.google.protobuf.Struct.Builder, com.google.protobuf.StructOrBuilder> objetoBuilder_;
-    /**
-     * <code>.google.protobuf.Struct objeto = 3;</code>
-     * @return Whether the objeto field is set.
-     */
-    public boolean hasObjeto() {
-      return objetoBuilder_ != null || objeto_ != null;
-    }
-    /**
-     * <code>.google.protobuf.Struct objeto = 3;</code>
-     * @return The objeto.
-     */
-    public com.google.protobuf.Struct getObjeto() {
-      if (objetoBuilder_ == null) {
-        return objeto_ == null ? com.google.protobuf.Struct.getDefaultInstance() : objeto_;
-      } else {
-        return objetoBuilder_.getMessage();
-      }
-    }
-    /**
-     * <code>.google.protobuf.Struct objeto = 3;</code>
-     */
-    public Builder setObjeto(com.google.protobuf.Struct value) {
-      if (objetoBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        objeto_ = value;
-        onChanged();
-      } else {
-        objetoBuilder_.setMessage(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.google.protobuf.Struct objeto = 3;</code>
-     */
-    public Builder setObjeto(
-        com.google.protobuf.Struct.Builder builderForValue) {
-      if (objetoBuilder_ == null) {
-        objeto_ = builderForValue.build();
-        onChanged();
-      } else {
-        objetoBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <code>.google.protobuf.Struct objeto = 3;</code>
-     */
-    public Builder mergeObjeto(com.google.protobuf.Struct value) {
-      if (objetoBuilder_ == null) {
-        if (objeto_ != null) {
-          objeto_ =
-            com.google.protobuf.Struct.newBuilder(objeto_).mergeFrom(value).buildPartial();
-        } else {
-          objeto_ = value;
-        }
-        onChanged();
-      } else {
-        objetoBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.google.protobuf.Struct objeto = 3;</code>
-     */
-    public Builder clearObjeto() {
-      if (objetoBuilder_ == null) {
-        objeto_ = null;
-        onChanged();
-      } else {
-        objeto_ = null;
-        objetoBuilder_ = null;
-      }
-
-      return this;
-    }
-    /**
-     * <code>.google.protobuf.Struct objeto = 3;</code>
-     */
-    public com.google.protobuf.Struct.Builder getObjetoBuilder() {
-      
-      onChanged();
-      return getObjetoFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.google.protobuf.Struct objeto = 3;</code>
-     */
-    public com.google.protobuf.StructOrBuilder getObjetoOrBuilder() {
-      if (objetoBuilder_ != null) {
-        return objetoBuilder_.getMessageOrBuilder();
-      } else {
-        return objeto_ == null ?
-            com.google.protobuf.Struct.getDefaultInstance() : objeto_;
-      }
-    }
-    /**
-     * <code>.google.protobuf.Struct objeto = 3;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.protobuf.Struct, com.google.protobuf.Struct.Builder, com.google.protobuf.StructOrBuilder> 
-        getObjetoFieldBuilder() {
-      if (objetoBuilder_ == null) {
-        objetoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Struct, com.google.protobuf.Struct.Builder, com.google.protobuf.StructOrBuilder>(
-                getObjeto(),
-                getParentForChildren(),
-                isClean());
-        objeto_ = null;
-      }
-      return objetoBuilder_;
     }
     @Override
     public final Builder setUnknownFields(
@@ -822,41 +634,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:grpc.SetRequest)
+    // @@protoc_insertion_point(builder_scope:grpc.DelVerRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:grpc.SetRequest)
-  private static final SetRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:grpc.DelVerRequest)
+  private static final DelVerRequest DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new SetRequest();
+    DEFAULT_INSTANCE = new DelVerRequest();
   }
 
-  public static SetRequest getDefaultInstance() {
+  public static DelVerRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<SetRequest>
-      PARSER = new com.google.protobuf.AbstractParser<SetRequest>() {
+  private static final com.google.protobuf.Parser<DelVerRequest>
+      PARSER = new com.google.protobuf.AbstractParser<DelVerRequest>() {
     @Override
-    public SetRequest parsePartialFrom(
+    public DelVerRequest parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new SetRequest(input, extensionRegistry);
+      return new DelVerRequest(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<SetRequest> parser() {
+  public static com.google.protobuf.Parser<DelVerRequest> parser() {
     return PARSER;
   }
 
   @Override
-  public com.google.protobuf.Parser<SetRequest> getParserForType() {
+  public com.google.protobuf.Parser<DelVerRequest> getParserForType() {
     return PARSER;
   }
 
   @Override
-  public SetRequest getDefaultInstanceForType() {
+  public DelVerRequest getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

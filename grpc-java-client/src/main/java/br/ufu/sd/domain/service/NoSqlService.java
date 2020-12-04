@@ -23,52 +23,121 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.ufu.sd.api.contract.reply.*;
+import br.ufu.sd.api.contract.request.*;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Struct;
 import com.google.protobuf.Value;
 
-import br.ufu.sd.api.contract.reply.SetReply;
-import br.ufu.sd.api.contract.request.SetRequest;
-import br.ufu.sd.api.contract.request.SetRequest.BigInt;
+import br.ufu.sd.domain.model.BigInt;
 import br.ufu.sd.core.grpc.NoSqlServiceGrpc;
 import io.grpc.Channel;
 import io.grpc.StatusRuntimeException;
 
 
-/**
- * A simple client that requests a greeting from the {@link HelloWorldServer}.
- */
 public class NoSqlService {
   private static final Logger logger = Logger.getLogger(NoSqlService.class.getName());
 
   private final NoSqlServiceGrpc.NoSqlServiceBlockingStub blockingStub;
 
-  /** Construct client for accessing HelloWorld server using the existing channel. */
   public NoSqlService(Channel channel) {
-    // 'channel' here is a Channel, not a ManagedChannel, so it is not this code's responsibility to
-    // shut it down.
-
-    // Passing Channels to code makes code easier to test and makes it easier to reuse Channels.
     blockingStub = NoSqlServiceGrpc.newBlockingStub(channel);
   }
 
-  /** Say hello to server. */
-  public void set(BigInteger key, Map<String, Value> struct) {
+  public String set(BigInteger key, Map<String, Value> struct) {
     SetRequest request = SetRequest.newBuilder()
-      .setKey(BigInt.newBuilder().setValue(ByteString.copyFrom(key.toByteArray())))
+      .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(key.toByteArray())))
       .setObjeto(Struct.newBuilder().putAllFields(struct).build())
       .setTimestamp(Instant.now().getEpochSecond()).build();
 
-    SetReply response;
+    SetReply reply;
 
     try {
-      response = blockingStub.set(request);
+      reply = blockingStub.set(request);
     } catch (StatusRuntimeException e) {
       logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-      return;
+      return "";
     }
 
-    logger.info("Set Response : { exito : '" + response.getExito().name() +  "' , v : { " +  (response.getValor()==null ? "NULL" : response.getValor()) + " } }");
+    return getParsedReply("Set", reply.getExito().name(), reply.getValor().toString());
+  }
+
+  public String get(BigInteger key) {
+    GetRequest request = GetRequest.newBuilder()
+      .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(key.toByteArray())))
+      .build();
+
+    GetReply reply;
+
+    try {
+      reply = blockingStub.get(request);
+    } catch (StatusRuntimeException e) {
+      logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+      return "";
+    }
+
+    return getParsedReply("Get", reply.getExito().name(), reply.getValor().toString());
+  }
+  
+  public String del(BigInteger key) {
+    DelRequest request = DelRequest.newBuilder()
+            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(key.toByteArray())))
+            .build();
+
+    DelReply reply;
+
+    try {
+      reply = blockingStub.del(request);
+    } catch (StatusRuntimeException e) {
+      logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+      return "";
+    }
+
+    return getParsedReply("Del", reply.getExito().name(), reply.getValor().toString());
+  }
+
+  public String delVer(BigInteger key, Long ver) {
+    DelVerRequest request = DelVerRequest.newBuilder()
+            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(key.toByteArray())))
+            .setVersao(ver)
+            .build();
+
+    DelVerReply reply;
+
+    try {
+      reply = blockingStub.delVer(request);
+    } catch (StatusRuntimeException e) {
+      logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+      return "";
+    }
+
+    return getParsedReply("DelVer", reply.getExito().name(), reply.getValor().toString());
+  }
+
+  public String testAndSet(BigInteger key, Long ver, Map<String, Value> struct) {
+    TestAndSetRequest request = TestAndSetRequest.newBuilder()
+            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(key.toByteArray())))
+            .setVersao(ver)
+            .setObjeto(Struct.newBuilder().putAllFields(struct).build())
+            .build();
+
+    TestAndSetReply reply;
+
+    try {
+      reply = blockingStub.testAndSet(request);
+    } catch (StatusRuntimeException e) {
+      logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+      return "";
+    }
+
+    return getParsedReply("TestAndSet", reply.getExito().name(), reply.getValor().toString());
+  }
+
+  private String getParsedReply(String name, String e, String v) {
+    return String.format("Resposta do %s:\n\n" +
+            "E  : %s\n" +
+            "V' :\n" +
+            "%s", name, e, v);
   }
 
 }

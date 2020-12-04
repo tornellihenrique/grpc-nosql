@@ -30,18 +30,19 @@ public class DatabaseRecovery<K,V> {
 		try {
 		  // Reading the object from a file
 		  logger.info("Recuperacao da base de dados NoSQL via backup..");
-		  FileInputStream file = new FileInputStream(backupFile.getAbsolutePath());
 		  ObjectInputStream in = null;
 		  try {
-			  in = new ObjectInputStream(file); 
+			  FileInputStream file = new FileInputStream(backupFile.getAbsolutePath());
+			  in = new ObjectInputStream(file);
+
+			  // Method for deserialization of object
+			  map = (Map<K,V>) in.readObject();
+			  in.close();
+			  file.close();
 		  }catch(EOFException exc) { // se o arquivo for vazio, retorne um HashMap vazia
 			  logger.info("Recuperacao da base de dados NoSQL realizada com sucesso");
 			  return new HashMap<>();
 		  }
-		  // Method for deserialization of object 
-		  map = (Map<K,V>) in.readObject(); 
-		  in.close(); 
-		  file.close();
 		  logger.info("Recuperacao da base de dados NoSQL realizada com sucesso");
 		  return map == null ? new HashMap<>() : map;
 		} catch(IOException ex) {

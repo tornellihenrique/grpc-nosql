@@ -1,6 +1,6 @@
 package br.ufu.sd;
 
-import br.ufu.sd.core.shell.GrpcShell;
+import br.ufu.sd.domain.shell.GrpcShell;
 import br.ufu.sd.domain.service.NoSqlService;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;

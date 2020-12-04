@@ -4,8 +4,8 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.Map;
 
-import br.ufu.sd.api.contract.reply.SetReply;
-import br.ufu.sd.api.contract.request.SetRequest;
+import br.ufu.sd.api.contract.reply.*;
+import br.ufu.sd.api.contract.request.*;
 import br.ufu.sd.core.grpc.NoSqlServiceGrpc.NoSqlServiceImplBase;
 import br.ufu.sd.core.recovery.DatabaseRecovery;
 import br.ufu.sd.domain.model.BigInt;
@@ -70,4 +70,112 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 		}
 	}
 
+	@Override
+	public void get(GetRequest request, StreamObserver<GetReply> responseObserver) {
+		if (database.containsKey(request.getChave())) {
+			responseObserver.onNext(GetReply.newBuilder()
+					.setExito(Exito.SUCCESS)
+					.setValor(database.get(request.getChave()))
+					.build());
+			responseObserver.onCompleted();
+
+			return;
+		}
+
+		responseObserver.onNext(GetReply.newBuilder()
+				.setExito(Exito.ERROR)
+				.build());
+		responseObserver.onCompleted();
+	}
+
+	@Override
+	public void del(DelRequest request, StreamObserver<DelReply> responseObserver) {
+		if (database.containsKey(request.getChave())) {
+			Valor valor = database.get(request.getChave());
+
+			synchronized (valor) {
+				database.remove(request.getChave());
+			}
+
+			responseObserver.onNext(DelReply.newBuilder()
+					.setExito(Exito.SUCCESS)
+					.setValor(valor)
+					.build());
+			responseObserver.onCompleted();
+
+			return;
+		}
+
+		responseObserver.onNext(DelReply.newBuilder()
+				.setExito(Exito.ERROR)
+				.build());
+		responseObserver.onCompleted();
+	}
+
+	@Override
+	public void delVer(DelVerRequest request, StreamObserver<DelVerReply> responseObserver) {
+		if (database.containsKey(request.getChave())) {
+			Valor valor = database.get(request.getChave());
+
+			if (valor.getVersao() == request.getVersao()) {
+				synchronized (valor) {
+					database.remove(request.getChave());
+				}
+
+				responseObserver.onNext(DelVerReply.newBuilder()
+						.setExito(Exito.SUCCESS)
+						.setValor(valor)
+						.build());
+			} else {
+				responseObserver.onNext(DelVerReply.newBuilder()
+						.setExito(Exito.ERROR_WV)
+						.setValor(valor)
+						.build());
+			}
+
+			responseObserver.onCompleted();
+
+			return;
+		}
+
+		responseObserver.onNext(DelVerReply.newBuilder()
+				.setExito(Exito.ERROR_NE)
+				.build());
+		responseObserver.onCompleted();
+	}
+
+	@Override
+	public void testAndSet(TestAndSetRequest request, StreamObserver<TestAndSetReply> responseObserver) {
+		if (database.containsKey(request.getChave())) {
+			Valor valor = database.get(request.getChave());
+
+			if (valor.getVersao() == request.getVersao()) {
+				synchronized (valor) {
+					database.put(request.getChave(), Valor.newBuilder(valor)
+							.setVersao(valor.getVersao())
+							.setObjeto(request.getObjeto())
+							.build());
+				}
+
+				responseObserver.onNext(TestAndSetReply.newBuilder()
+						.setExito(Exito.SUCCESS)
+						.setValor(valor)
+						.build());
+			} else {
+				responseObserver.onNext(TestAndSetReply.newBuilder()
+						.setExito(Exito.ERROR_WV)
+						.setValor(valor)
+						.build());
+			}
+
+			responseObserver.onCompleted();
+
+			return;
+		}
+
+		responseObserver.onNext(TestAndSetReply.newBuilder()
+				.setExito(Exito.ERROR_NE)
+				.build());
+		responseObserver.onCompleted();
+	}
 }

@@ -14,26 +14,68 @@ public final class NoSqlServiceProto {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
+  
+  
   public static final com.google.protobuf.Descriptors.Descriptor
     internal_static_grpc_SetRequest_descriptor;
   public static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_grpc_SetRequest_fieldAccessorTable;
   public static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_grpc_SetRequest_BigInt_descriptor;
+    internal_static_grpc_GetRequest_descriptor;
   public static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_grpc_SetRequest_BigInt_fieldAccessorTable;
+      internal_static_grpc_GetRequest_fieldAccessorTable;
+  public static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_grpc_DelRequest_descriptor;
+  public static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_grpc_DelRequest_fieldAccessorTable;
+  public static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_grpc_DelVerRequest_descriptor;
+  public static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_grpc_DelVerRequest_fieldAccessorTable;
+  public static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_grpc_TestAndSetRequest_descriptor;
+  public static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_grpc_TestAndSetRequest_fieldAccessorTable;
   public static final com.google.protobuf.Descriptors.Descriptor
     internal_static_grpc_SetReply_descriptor;
   public static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_grpc_SetReply_fieldAccessorTable;
   public static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_grpc_GetReply_descriptor;
+  public static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_grpc_GetReply_fieldAccessorTable;
+  public static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_grpc_DelReply_descriptor;
+  public static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_grpc_DelReply_fieldAccessorTable;
+  public static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_grpc_DelVerReply_descriptor;
+  public static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_grpc_DelVerReply_fieldAccessorTable;
+  public static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_grpc_TestAndSetReply_descriptor;
+  public static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_grpc_TestAndSetReply_fieldAccessorTable;
+  public static final com.google.protobuf.Descriptors.Descriptor
     internal_static_grpc_Valor_descriptor;
   public static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_grpc_Valor_fieldAccessorTable;
+  public static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_grpc_BigInt_descriptor;
+  public static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_grpc_BigInt_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -42,20 +84,39 @@ public final class NoSqlServiceProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\024nosql_database.proto\022\004grpc\032\034google/pro" +
-      "tobuf/struct.proto\"\207\001\n\nSetRequest\022$\n\003key" +
-      "\030\001 \001(\0132\027.grpc.SetRequest.BigInt\022\021\n\ttimes" +
-      "tamp\030\002 \001(\003\022\'\n\006objeto\030\003 \001(\0132\027.google.prot" +
-      "obuf.Struct\032\027\n\006BigInt\022\r\n\005value\030\001 \001(\014\"l\n\010" +
-      "SetReply\022#\n\005exito\030\001 \001(\0162\024.grpc.SetReply." +
-      "Exito\022\032\n\005valor\030\002 \001(\0132\013.grpc.Valor\"\037\n\005Exi" +
-      "to\022\t\n\005ERROR\020\000\022\013\n\007SUCCESS\020\001\"S\n\005Valor\022\016\n\006v" +
-      "ersao\030\001 \001(\003\022\021\n\ttimestamp\030\002 \001(\003\022\'\n\006objeto" +
-      "\030\003 \001(\0132\027.google.protobuf.Struct29\n\014NoSql" +
-      "Service\022)\n\003set\022\020.grpc.SetRequest\032\016.grpc." +
-      "SetReply\"\000B*\n\023br.ufu.sd.core.grpcB\021NoSql" +
-      "ServiceProtoP\001b\006proto3"
+      "tobuf/struct.proto\"e\n\nSetRequest\022\033\n\005chav" +
+      "e\030\001 \001(\0132\014.grpc.BigInt\022\021\n\ttimestamp\030\002 \001(\003" +
+      "\022\'\n\006objeto\030\003 \001(\0132\027.google.protobuf.Struc" +
+      "t\")\n\nGetRequest\022\033\n\005chave\030\001 \001(\0132\014.grpc.Bi" +
+      "gInt\")\n\nDelRequest\022\033\n\005chave\030\001 \001(\0132\014.grpc" +
+      ".BigInt\"<\n\rDelVerRequest\022\033\n\005chave\030\001 \001(\0132" +
+      "\014.grpc.BigInt\022\016\n\006versao\030\002 \001(\003\"|\n\021TestAnd" +
+      "SetRequest\022\033\n\005chave\030\001 \001(\0132\014.grpc.BigInt\022" +
+      "\021\n\ttimestamp\030\002 \001(\003\022\'\n\006objeto\030\003 \001(\0132\027.goo" +
+      "gle.protobuf.Struct\022\016\n\006versao\030\004 \001(\003\"B\n\010S" +
+      "etReply\022\032\n\005exito\030\001 \001(\0162\013.grpc.Exito\022\032\n\005v" +
+      "alor\030\002 \001(\0132\013.grpc.Valor\"B\n\010GetReply\022\032\n\005e" +
+      "xito\030\001 \001(\0162\013.grpc.Exito\022\032\n\005valor\030\002 \001(\0132\013" +
+      ".grpc.Valor\"B\n\010DelReply\022\032\n\005exito\030\001 \001(\0162\013" +
+      ".grpc.Exito\022\032\n\005valor\030\002 \001(\0132\013.grpc.Valor\"" +
+      "E\n\013DelVerReply\022\032\n\005exito\030\001 \001(\0162\013.grpc.Exi" +
+      "to\022\032\n\005valor\030\002 \001(\0132\013.grpc.Valor\"I\n\017TestAn" +
+      "dSetReply\022\032\n\005exito\030\001 \001(\0162\013.grpc.Exito\022\032\n" +
+      "\005valor\030\002 \001(\0132\013.grpc.Valor\"S\n\005Valor\022\016\n\006ve" +
+      "rsao\030\001 \001(\003\022\021\n\ttimestamp\030\002 \001(\003\022\'\n\006objeto\030" +
+      "\003 \001(\0132\027.google.protobuf.Struct\"\027\n\006BigInt" +
+      "\022\r\n\005value\030\001 \001(\014*;\n\005Exito\022\t\n\005ERROR\020\000\022\013\n\007S" +
+      "UCCESS\020\001\022\014\n\010ERROR_NE\020\002\022\014\n\010ERROR_WV\020\0032\203\002\n" +
+      "\014NoSqlService\022)\n\003set\022\020.grpc.SetRequest\032\016" +
+      ".grpc.SetReply\"\000\022)\n\003get\022\020.grpc.GetReques" +
+      "t\032\016.grpc.GetReply\"\000\022)\n\003del\022\020.grpc.DelReq" +
+      "uest\032\016.grpc.DelReply\"\000\0222\n\006delVer\022\023.grpc." +
+      "DelVerRequest\032\021.grpc.DelVerReply\"\000\022>\n\nte" +
+      "stAndSet\022\027.grpc.TestAndSetRequest\032\025.grpc" +
+      ".TestAndSetReply\"\000B*\n\023br.ufu.sd.core.grp" +
+      "cB\021NoSqlServiceProtoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -67,25 +128,73 @@ public final class NoSqlServiceProto {
     internal_static_grpc_SetRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_grpc_SetRequest_descriptor,
-        new java.lang.String[] { "Key", "Timestamp", "Objeto", });
-    internal_static_grpc_SetRequest_BigInt_descriptor =
-      internal_static_grpc_SetRequest_descriptor.getNestedTypes().get(0);
-    internal_static_grpc_SetRequest_BigInt_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_grpc_SetRequest_BigInt_descriptor,
-        new java.lang.String[] { "Value", });
-    internal_static_grpc_SetReply_descriptor =
+        new String[] { "Chave", "Timestamp", "Objeto", });
+    internal_static_grpc_GetRequest_descriptor =
       getDescriptor().getMessageTypes().get(1);
+    internal_static_grpc_GetRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_grpc_GetRequest_descriptor,
+        new String[] { "Chave", });
+    internal_static_grpc_DelRequest_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_grpc_DelRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_grpc_DelRequest_descriptor,
+        new String[] { "Chave", });
+    internal_static_grpc_DelVerRequest_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_grpc_DelVerRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_grpc_DelVerRequest_descriptor,
+        new String[] { "Chave", "Versao", });
+    internal_static_grpc_TestAndSetRequest_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_grpc_TestAndSetRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_grpc_TestAndSetRequest_descriptor,
+        new String[] { "Chave", "Timestamp", "Objeto", "Versao", });
+    internal_static_grpc_SetReply_descriptor =
+      getDescriptor().getMessageTypes().get(5);
     internal_static_grpc_SetReply_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_grpc_SetReply_descriptor,
-        new java.lang.String[] { "Exito", "Valor", });
+        new String[] { "Exito", "Valor", });
+    internal_static_grpc_GetReply_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_grpc_GetReply_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_grpc_GetReply_descriptor,
+        new String[] { "Exito", "Valor", });
+    internal_static_grpc_DelReply_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_grpc_DelReply_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_grpc_DelReply_descriptor,
+        new String[] { "Exito", "Valor", });
+    internal_static_grpc_DelVerReply_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_grpc_DelVerReply_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_grpc_DelVerReply_descriptor,
+        new String[] { "Exito", "Valor", });
+    internal_static_grpc_TestAndSetReply_descriptor =
+      getDescriptor().getMessageTypes().get(9);
+    internal_static_grpc_TestAndSetReply_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_grpc_TestAndSetReply_descriptor,
+        new String[] { "Exito", "Valor", });
     internal_static_grpc_Valor_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(10);
     internal_static_grpc_Valor_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_grpc_Valor_descriptor,
-        new java.lang.String[] { "Versao", "Timestamp", "Objeto", });
+        new String[] { "Versao", "Timestamp", "Objeto", });
+    internal_static_grpc_BigInt_descriptor =
+      getDescriptor().getMessageTypes().get(11);
+    internal_static_grpc_BigInt_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_grpc_BigInt_descriptor,
+        new String[] { "Value", });
     com.google.protobuf.StructProto.getDescriptor();
   }
 
