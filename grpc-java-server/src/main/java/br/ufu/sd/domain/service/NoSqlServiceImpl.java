@@ -29,10 +29,13 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 		SetReply reply = null;
 		
 		if(! database.containsKey(request.getChave())) {
-			database.put(request.getChave(), Valor.newBuilder()
-		               .setObjeto(request.getObjeto())
-		               .setVersao(1)
-		               .setTimestamp(request.getTimestamp()).build());
+			
+			synchronized (database) {
+				database.put(request.getChave(), Valor.newBuilder()
+			               .setObjeto(request.getObjeto())
+			               .setVersao(1)
+			               .setTimestamp(request.getTimestamp()).build());
+			}
 			
 			reply = SetReply
 				.newBuilder()
@@ -65,9 +68,6 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 		}
 		responseObserver.onNext(reply);
 		responseObserver.onCompleted();
-		synchronized (databaseRecovery) {
-			databaseRecovery.backup(database);
-		}
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 	}
 
 	@Override
-	public void del(DelRequest request, StreamObserver<DelReply> responseObserver) {
+	public synchronized void del(DelRequest request, StreamObserver<DelReply> responseObserver) {
 		if (database.containsKey(request.getChave())) {
 			Valor valor = database.get(request.getChave());
 
@@ -113,7 +113,7 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 	}
 
 	@Override
-	public void delVer(DelVerRequest request, StreamObserver<DelVerReply> responseObserver) {
+	public synchronized void delVer(DelVerRequest request, StreamObserver<DelVerReply> responseObserver) {
 		if (database.containsKey(request.getChave())) {
 			Valor valor = database.get(request.getChave());
 
@@ -145,7 +145,7 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 	}
 
 	@Override
-	public void testAndSet(TestAndSetRequest request, StreamObserver<TestAndSetReply> responseObserver) {
+	public synchronized void testAndSet(TestAndSetRequest request, StreamObserver<TestAndSetReply> responseObserver) {
 		if (database.containsKey(request.getChave())) {
 			Valor valor = database.get(request.getChave());
 
