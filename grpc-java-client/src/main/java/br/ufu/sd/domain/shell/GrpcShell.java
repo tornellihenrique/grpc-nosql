@@ -40,6 +40,14 @@ public class GrpcShell {
         public static final String TEST_SET = SLASH + "testSet";
 
         public static final String TEST_GET = SLASH + "testGet";
+
+        public static final String TEST_DEL = SLASH + "testDel";
+
+        public static final String TEST_DEL_VER = SLASH + "testDelVer";
+
+        public static final String TEST_TEST_AND_SET = SLASH + "testTestAndSet";
+
+        public static final String TEST_STRESS = SLASH + "testStress";
     }
 
     private final NoSqlService client;
@@ -135,6 +143,12 @@ public class GrpcShell {
 
             if (input.startsWith(Commands.TEST_AND_SET + " ")) {
                 testAndSet(input);
+                continue;
+            }
+
+            if (input.startsWith(Commands.TEST_SET)) {
+                System.out.println("Iniciando teste de Set...");
+                System.out.println(client.getTestService().testSet());
                 continue;
             }
 

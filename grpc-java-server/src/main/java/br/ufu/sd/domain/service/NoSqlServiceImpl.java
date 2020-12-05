@@ -32,7 +32,7 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 			database.put(request.getChave(), Valor.newBuilder()
 		               .setObjeto(request.getObjeto())
 		               .setVersao(1)
-		               .setTimestamp(Instant.now().toEpochMilli()).build());
+		               .setTimestamp(request.getTimestamp()).build());
 			
 			reply = SetReply
 				.newBuilder()

@@ -19,12 +19,15 @@ package br.ufu.sd.domain.service;
 
 import java.math.BigInteger;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.ufu.sd.api.contract.reply.*;
 import br.ufu.sd.api.contract.request.*;
+import br.ufu.sd.domain.model.Exito;
+import br.ufu.sd.domain.model.Valor;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Struct;
 import com.google.protobuf.Value;
@@ -40,8 +43,15 @@ public class NoSqlService {
 
   private final NoSqlServiceGrpc.NoSqlServiceBlockingStub blockingStub;
 
+  private final NoSqlTestService noSqlTestService;
+
   public NoSqlService(Channel channel) {
     blockingStub = NoSqlServiceGrpc.newBlockingStub(channel);
+    noSqlTestService = new NoSqlTestService(blockingStub);
+  }
+
+  public NoSqlTestService getTestService() {
+    return noSqlTestService;
   }
 
   public String set(BigInteger key, Map<String, Value> struct) {
