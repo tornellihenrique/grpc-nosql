@@ -43,7 +43,7 @@ public class GrpcShell {
 
         public static final String TEST_DEL = SLASH + "testDel";
 
-        public static final String TEST_DEL_VER = SLASH + "testDelVer";
+        public static final String TEST_VER_DEL = SLASH + "testVerDel";
 
         public static final String TEST_TEST_AND_SET = SLASH + "testTestAndSet";
 
@@ -123,7 +123,7 @@ public class GrpcShell {
                         "\t\t> Realiza testes no serviço GET da API\n" +
                         "\t- /testDel\n" +
                         "\t\t> Realiza testes no serviço DEL da API\n" +
-                        "\t- /testDelVer\n" +
+                        "\t- /testVerDel\n" +
                         "\t\t> Realiza testes no serviço DEL por versão da API\n" +
                         "\t- /testTestAndSet\n" +
                         "\t\t> Realiza testes no teste do serviço SET da API\n" +
@@ -181,9 +181,9 @@ public class GrpcShell {
                 continue;
             }
 
-            if (input.startsWith(Commands.TEST_DEL_VER)) {
-                System.out.println("Iniciando teste de DelVer...");
-                System.out.println(client.getTestService().testDelVer());
+            if (input.startsWith(Commands.TEST_VER_DEL)) {
+                System.out.println("Iniciando teste de DelVer...\n");
+                client.getTestService().testDelVer();
                 continue;
             }
 

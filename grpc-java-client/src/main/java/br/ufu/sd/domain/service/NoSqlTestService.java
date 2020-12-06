@@ -1,9 +1,11 @@
 package br.ufu.sd.domain.service;
 
 import br.ufu.sd.api.contract.reply.DelReply;
+import br.ufu.sd.api.contract.reply.DelVerReply;
 import br.ufu.sd.api.contract.reply.GetReply;
 import br.ufu.sd.api.contract.reply.SetReply;
 import br.ufu.sd.api.contract.request.DelRequest;
+import br.ufu.sd.api.contract.request.DelVerRequest;
 import br.ufu.sd.api.contract.request.GetRequest;
 import br.ufu.sd.api.contract.request.SetRequest;
 import br.ufu.sd.core.grpc.NoSqlServiceGrpc;
@@ -256,15 +258,118 @@ public class NoSqlTestService {
         }
     }
 
-    public String testDelVer() {
-        while (true) {
-            try {
+    public void testDelVer() {
+        boolean isSuccess = false;
+        boolean isErrorNe = false;
+        boolean isErrorWv = false;
+        int requestCounter = 0;
 
+        while (true) {
+            BigInteger randomKey = BigInteger.valueOf((long) (Math.random() * 10000) + 1);
+            Long randomVersion = (long) (Math.random() * 10) + 1;
+
+            DelVerRequest delVerRequest = DelVerRequest.newBuilder()
+                    .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                    .setVersao(randomVersion)
+                    .build();
+
+            try {
+                DelVerReply delVerReply = blockingStub.delVer(delVerRequest);
+                requestCounter += 1;
+
+                if (delVerReply.getExito().name().equalsIgnoreCase(Exito.SUCCESS.name()) && !isSuccess) {
+                    System.out.println("Testando com a chave " + randomKey + " e versão " + randomVersion);
+                    System.out.println(delVerReply);
+                    isSuccess = true;
+                    continue;
+                }
+
+                if (delVerReply.getExito().name().equalsIgnoreCase(Exito.ERROR_NE.name()) && !isErrorNe) {
+                    System.out.println("Testando com a chave " + randomKey + " e versão " + randomVersion);
+                    System.out.println("exito: " + delVerReply.getExito() + "\n" + "valor");
+                    System.out.println("\n");
+                    isErrorNe = true;
+                    continue;
+                }
+
+                if (delVerReply.getExito().name().equalsIgnoreCase(Exito.ERROR_WV.name()) && !isErrorWv) {
+                    System.out.println("Testando com a chave " + randomKey + " e versão " + randomVersion);
+                    System.out.println(delVerReply);
+                    System.out.println("\n");
+                    isErrorWv = true;
+                    continue;
+                }
+
+                if (!isSuccess && requestCounter > 1000) {
+                    Map<String, Value> struct1 = new HashMap<>();
+                    struct1.put("test", Value.newBuilder().setNumberValue(10.0D).build());
+
+                    SetRequest setRequest = SetRequest.newBuilder()
+                            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                            .setObjeto(Struct.newBuilder().putAllFields(struct1).build())
+                            .build();
+
+                    SetReply setReply = blockingStub.set(setRequest);
+
+                    System.out.println("Testando com a chave " + randomKey + " e versão 1");
+
+                    DelVerRequest newDelVerRequest = DelVerRequest.newBuilder()
+                            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                            .setVersao(1)
+                            .build();
+
+                    DelVerReply newDelVerReply = blockingStub.delVer(newDelVerRequest);
+
+                    System.out.println(newDelVerReply);
+                    isSuccess = true;
+                    continue;
+                }
+
+                if (!isErrorWv && requestCounter > 1000) {
+                    Map<String, Value> struct1 = new HashMap<>();
+                    struct1.put("test", Value.newBuilder().setNumberValue(10.0D).build());
+
+                    for (int i = 0; i < randomVersion; i++) {
+                        SetRequest setRequest = SetRequest.newBuilder()
+                                .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                                .setObjeto(Struct.newBuilder().putAllFields(struct1).build())
+                                .build();
+
+                        SetReply setReply = blockingStub.set(setRequest);
+                    }
+
+                    System.out.println("Testando com a chave " + randomKey + " e versão " + randomVersion + 1);
+
+                    DelVerRequest newDelVerRequest = DelVerRequest.newBuilder()
+                            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                            .setVersao(randomVersion + 1)
+                            .build();
+
+                    DelVerReply newDelVerReply = blockingStub.delVer(newDelVerRequest);
+
+                    System.out.println(newDelVerReply);
+                    isErrorWv = true;
+
+                    DelVerRequest eraserDelVerRequest = DelVerRequest.newBuilder()
+                            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                            .setVersao(1)
+                            .build();
+
+                    DelVerReply eraserDelVerReply = blockingStub.delVer(eraserDelVerRequest);
+                    continue;
+                }
+
+                if (isSuccess && isErrorNe && isErrorWv) {
+                    System.out.println("Todos os possiveis resultados foram obtidos! Teste finalizado com sucesso!");
+                    break;
+                }
             } catch (StatusRuntimeException e) {
                 logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-                return "";
+                System.out.println(e.getStatus());
+                break;
             } catch (Exception e) {
-                return e.getMessage();
+                System.out.println(e.getMessage());
+                break;
             }
         }
     }
