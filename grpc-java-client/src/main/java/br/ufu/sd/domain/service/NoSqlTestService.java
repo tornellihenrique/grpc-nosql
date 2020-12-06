@@ -188,15 +188,70 @@ public class NoSqlTestService {
         }
     }
 
-    public String testDel() {
-        while (true) {
-            try {
+    public void testDel() {
+        boolean isSuccess = false;
+        boolean isError = false;
+        int requestCounter = 0;
 
+        while (true) {
+            BigInteger randomKey = BigInteger.valueOf((long) (Math.random() * 10000) + 1);
+
+            DelRequest delRequest = DelRequest.newBuilder()
+                    .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                    .build();
+
+            try {
+                DelReply delReply = blockingStub.del(delRequest);
+                requestCounter += 1;
+
+                if (delReply.getExito().name().equalsIgnoreCase(Exito.SUCCESS.name()) && !isSuccess) {
+                    System.out.println("Testando com a chave " + randomKey);
+                    System.out.println(delReply);
+                    isSuccess = true;
+                    continue;
+                }
+
+                if (delReply.getExito().name().equalsIgnoreCase(Exito.ERROR.name()) && !isError) {
+                    System.out.println("Testando com a chave " + randomKey);
+                    System.out.println("exito: " + delReply.getExito() + "\n" + "valor");
+                    System.out.println("\n");
+                    isError = true;
+                    continue;
+                }
+
+                if (!isSuccess && requestCounter > 1000) {
+                    Map<String, Value> struct1 = new HashMap<>();
+                    struct1.put("test", Value.newBuilder().setNumberValue(10.0D).build());
+
+                    SetRequest setRequest = SetRequest.newBuilder()
+                            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                            .setObjeto(Struct.newBuilder().putAllFields(struct1).build())
+                            .build();
+
+                    SetReply setReply = blockingStub.set(setRequest);
+
+                    System.out.println("Testando com a chave " + randomKey);
+
+                    DelRequest newDelRequest = DelRequest.newBuilder()
+                            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                            .build();
+
+                    DelReply newDelReply = blockingStub.del(newDelRequest);
+                    System.out.println(newDelReply);
+                    isSuccess = true;
+                    continue;
+                }
+
+                if (isSuccess && isError) {
+                    System.out.println("Todos os possiveis resultados foram obtidos! Teste finalizado com sucesso!");
+                    break;
+                }
             } catch (StatusRuntimeException e) {
                 logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-                return "";
+                break;
             } catch (Exception e) {
-                return e.getMessage();
+                System.out.println(e.getMessage());
+                break;
             }
         }
     }

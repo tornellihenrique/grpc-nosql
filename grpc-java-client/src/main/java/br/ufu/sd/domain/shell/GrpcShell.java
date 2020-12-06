@@ -176,8 +176,8 @@ public class GrpcShell {
             }
 
             if (input.startsWith(Commands.TEST_DEL)) {
-                System.out.println("Iniciando teste de Del...");
-                System.out.println(client.getTestService().testDel());
+                System.out.println("Iniciando teste de Del...\n");
+                client.getTestService().testDel();
                 continue;
             }
 
