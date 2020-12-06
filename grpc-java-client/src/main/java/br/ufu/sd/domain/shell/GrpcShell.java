@@ -170,8 +170,8 @@ public class GrpcShell {
             }
 
             if (input.startsWith(Commands.TEST_GET)) {
-                System.out.println("Iniciando teste de Get...");
-                System.out.println(client.getTestService().testGet());
+                System.out.println("Iniciando teste de Get...\n");
+                client.getTestService().testGet();
                 continue;
             }
 

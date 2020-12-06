@@ -1,5 +1,6 @@
 package br.ufu.sd.domain.service;
 
+import br.ufu.sd.api.contract.reply.DelReply;
 import br.ufu.sd.api.contract.reply.GetReply;
 import br.ufu.sd.api.contract.reply.SetReply;
 import br.ufu.sd.api.contract.request.DelRequest;
@@ -113,23 +114,129 @@ public class NoSqlTestService {
         }
     }
 
-    public String testGet() {
-        return null;
+    public void testGet() {
+        boolean isSuccess = false;
+        boolean isError = false;
+        int requestCounter = 0;
+
+        while (true) {
+            BigInteger randomKey = BigInteger.valueOf((long) (Math.random() * 1000) + 1);
+
+            GetRequest getRequest = GetRequest.newBuilder()
+                    .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                    .build();
+
+            try {
+                GetReply getReply = blockingStub.get(getRequest);
+                requestCounter += 1;
+
+                if (getReply.getExito().name().equalsIgnoreCase(Exito.SUCCESS.name()) && !isSuccess) {
+                    System.out.println("Testando com a chave " + randomKey);
+                    System.out.println(getReply);
+                    isSuccess = true;
+                    continue;
+                }
+
+                if (getReply.getExito().name().equalsIgnoreCase(Exito.ERROR.name()) && !isError) {
+                    System.out.println("Testando com a chave " + randomKey);
+                    System.out.println("exito: " + getReply.getExito() + "\n" + "valor");
+                    System.out.println("\n");
+                    isError = true;
+                    continue;
+                }
+
+                if (!isSuccess && requestCounter > 1000) {
+                    Map<String, Value> struct1 = new HashMap<>();
+                    struct1.put("test", Value.newBuilder().setNumberValue(10.0D).build());
+
+                    SetRequest newSetRequest = SetRequest.newBuilder()
+                            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                            .setObjeto(Struct.newBuilder().putAllFields(struct1).build())
+                            .build();
+
+                    SetReply newSetReply = blockingStub.set(newSetRequest);
+
+                    GetRequest newGetRequest = GetRequest.newBuilder()
+                            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                            .build();
+
+                    GetReply newGetReply = blockingStub.get(newGetRequest);
+
+                    System.out.println("Testando com a chave " + randomKey);
+                    System.out.println(newGetReply);
+                    isSuccess = true;
+
+                    DelRequest newDelRequest = DelRequest.newBuilder()
+                            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                            .build();
+
+                    DelReply newDelReply = blockingStub.del(newDelRequest);
+                    continue;
+                }
+
+                if (isSuccess && isError) {
+                    System.out.println("Todos os possiveis resultados foram obtidos! Teste finalizado com sucesso!");
+                    break;
+                }
+            } catch (StatusRuntimeException e) {
+                logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+                break;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                break;
+            }
+        }
     }
 
     public String testDel() {
-        return null;
+        while (true) {
+            try {
+
+            } catch (StatusRuntimeException e) {
+                logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+                return "";
+            } catch (Exception e) {
+                return e.getMessage();
+            }
+        }
     }
 
     public String testDelVer() {
-        return null;
+        while (true) {
+            try {
+
+            } catch (StatusRuntimeException e) {
+                logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+                return "";
+            } catch (Exception e) {
+                return e.getMessage();
+            }
+        }
     }
 
     public String testTestAndSet() {
-        return null;
+        while (true) {
+            try {
+
+            } catch (StatusRuntimeException e) {
+                logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+                return "";
+            } catch (Exception e) {
+                return e.getMessage();
+            }
+        }
     }
 
     public String stressTest() {
-        return null;
+        while (true) {
+            try {
+
+            } catch (StatusRuntimeException e) {
+                logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+                return "";
+            } catch (Exception e) {
+                return e.getMessage();
+            }
+        }
     }
 }
