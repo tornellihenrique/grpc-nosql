@@ -1,13 +1,7 @@
 package br.ufu.sd.domain.service;
 
-import br.ufu.sd.api.contract.reply.DelReply;
-import br.ufu.sd.api.contract.reply.DelVerReply;
-import br.ufu.sd.api.contract.reply.GetReply;
-import br.ufu.sd.api.contract.reply.SetReply;
-import br.ufu.sd.api.contract.request.DelRequest;
-import br.ufu.sd.api.contract.request.DelVerRequest;
-import br.ufu.sd.api.contract.request.GetRequest;
-import br.ufu.sd.api.contract.request.SetRequest;
+import br.ufu.sd.api.contract.reply.*;
+import br.ufu.sd.api.contract.request.*;
 import br.ufu.sd.core.grpc.NoSqlServiceGrpc;
 import br.ufu.sd.domain.model.BigInt;
 import br.ufu.sd.domain.model.Exito;
@@ -374,15 +368,130 @@ public class NoSqlTestService {
         }
     }
 
-    public String testTestAndSet() {
-        while (true) {
-            try {
+    public void testTestAndSet() {
+        boolean isSuccess = false;
+        boolean isErrorNe = false;
+        boolean isErrorWv = false;
+        int requestCounter = 0;
 
+        while (true) {
+            BigInteger randomKey = BigInteger.valueOf((long) (Math.random() * 10000) + 1);
+            Long randomVersion = (long) (Math.random() * 10) + 1;
+            Double randomValue = (Math.random() * 10000) + 1;
+
+            Map<String, Value> struct1 = new HashMap<>();
+            struct1.put("randomValue", Value.newBuilder().setNumberValue(randomValue).build());
+
+            TestAndSetRequest testAndSetRequest = TestAndSetRequest.newBuilder()
+                    .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                    .setVersao(randomVersion)
+                    .setObjeto(Struct.newBuilder().putAllFields(struct1).build())
+                    .build();
+
+            try {
+                TestAndSetReply testAndSetReply = blockingStub.testAndSet(testAndSetRequest);
+                requestCounter += 1;
+
+                if (testAndSetReply.getExito().name().equalsIgnoreCase(Exito.SUCCESS.name()) && !isSuccess) {
+                    System.out.println("Testando com a chave " + randomKey + ", versão " + randomVersion
+                            + " e { randomValue: " + randomValue + " }");
+                    System.out.println(testAndSetReply);
+                    isSuccess = true;
+                    continue;
+                }
+
+                if (testAndSetReply.getExito().name().equalsIgnoreCase(Exito.ERROR_NE.name()) && !isErrorNe) {
+                    System.out.println("Testando com a chave " + randomKey + ", versão " + randomVersion
+                            + " e { randomValue: " + randomValue + " }");
+                    System.out.println("exito: " + testAndSetReply.getExito() + "\n" + "valor");
+                    System.out.println("\n");
+                    isErrorNe = true;
+                    continue;
+                }
+
+                if (testAndSetReply.getExito().name().equalsIgnoreCase(Exito.ERROR_WV.name()) && !isErrorWv) {
+                    System.out.println("Testando com a chave " + randomKey + ", versão " + randomVersion
+                            + " e { randomValue: " + randomValue + " }");
+                    System.out.println(testAndSetReply);
+                    System.out.println("\n");
+                    isErrorWv = true;
+                    continue;
+                }
+
+                if (!isSuccess && requestCounter > 1000) {
+                    SetRequest setRequest = SetRequest.newBuilder()
+                            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                            .setObjeto(Struct.newBuilder().putAllFields(struct1).build())
+                            .build();
+
+                    SetReply setReply = blockingStub.set(setRequest);
+
+                    System.out.println("Testando com a chave " + randomKey + ", versão 1 e { randomValue: "
+                            + randomValue + " }");
+
+                    TestAndSetRequest newTestAndSetRequest = TestAndSetRequest.newBuilder()
+                            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                            .setVersao(1)
+                            .setObjeto(Struct.newBuilder().putAllFields(struct1).build())
+                            .build();
+
+                    TestAndSetReply newTestAndSetReply = blockingStub.testAndSet(newTestAndSetRequest);
+
+                    System.out.println(newTestAndSetReply);
+                    isSuccess = true;
+
+                    DelRequest delRequest = DelRequest.newBuilder()
+                            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                            .build();
+
+                    DelReply delReply = blockingStub.del(delRequest);
+                    continue;
+                }
+
+                if (!isErrorWv && requestCounter > 1000) {
+
+                    for (int i = 0; i < randomVersion; i++) {
+                        SetRequest setRequest = SetRequest.newBuilder()
+                                .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                                .setObjeto(Struct.newBuilder().putAllFields(struct1).build())
+                                .build();
+
+                        SetReply setReply = blockingStub.set(setRequest);
+                    }
+
+                    System.out.println("Testando com a chave " + randomKey + ", versão "
+                            + randomVersion + 1 + " e { randomValue: " + randomValue + " }");
+
+                    TestAndSetRequest newTestAndSetRequest = TestAndSetRequest.newBuilder()
+                            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                            .setVersao(randomVersion + 1)
+                            .setObjeto(Struct.newBuilder().putAllFields(struct1).build())
+                            .build();
+
+                    TestAndSetReply newTestAndSetReply = blockingStub.testAndSet(newTestAndSetRequest);
+
+                    System.out.println(newTestAndSetReply);
+                    isErrorWv = true;
+
+                    DelRequest delRequest = DelRequest.newBuilder()
+                            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                            .build();
+
+                    DelReply delReply = blockingStub.del(delRequest);
+                    continue;
+                }
+
+                if (isSuccess && isErrorNe && isErrorWv) {
+                    System.out.println("Todos os possiveis resultados foram obtidos! Teste finalizado com sucesso!");
+                    break;
+                }
             } catch (StatusRuntimeException e) {
                 logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-                return "";
+                System.out.println(e.getStatus());
+                break;
             } catch (Exception e) {
-                return e.getMessage();
+                System.out.println(e.getMessage());
+                break;
             }
         }
     }
