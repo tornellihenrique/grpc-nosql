@@ -496,15 +496,63 @@ public class NoSqlTestService {
         }
     }
 
-    public String stressTest() {
+    public void stressTest() {
         while (true) {
             try {
+                for (int i = 0; i < 1000; i++) {
+                    BigInteger randomKey = BigInteger.valueOf((long) (Math.random() * 10000) + 1);
+                    Double randomValue = (Math.random() * 10000) + 1;
 
+                    Map<String, Value> struct1 = new HashMap<>();
+                    struct1.put("randomValue", Value.newBuilder().setNumberValue(randomValue).build());
+
+                    SetRequest setRequest = SetRequest.newBuilder()
+                            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                            .setObjeto(Struct.newBuilder().putAllFields(struct1).build())
+                            .build();
+
+                    SetReply setReply = blockingStub.set(setRequest);
+
+                    if (setReply.getExito().name().equalsIgnoreCase(Exito.SUCCESS.name())) {
+                        System.out.println("Inserindo na chave " + randomKey + " o dado { randomValue: " + randomValue + " }");
+                        System.out.println("exito: " + setReply.getExito() + "\n" + "valor" + "\n");
+                    }
+
+                    if (setReply.getExito().name().equalsIgnoreCase(Exito.ERROR.name())) {
+                        System.out.println("Inserindo na chave " + randomKey + " o dado { randomValue: " + randomValue + " }");
+                        System.out.println(setReply + "\n");
+                    }
+                }
+
+                for (int i = 0; i < 1000; i++) {
+                    BigInteger randomKey = BigInteger.valueOf((long) (Math.random() * 10000) + 1);
+
+                    GetRequest getRequest = GetRequest.newBuilder()
+                            .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
+                            .build();
+
+                    GetReply getReply = blockingStub.get(getRequest);
+
+                    if (getReply.getExito().name().equalsIgnoreCase(Exito.SUCCESS.name())) {
+                        System.out.println("Listando dados da chave " + randomKey);
+                        System.out.println(getReply + "\n");
+                    }
+
+                    if (getReply.getExito().name().equalsIgnoreCase(Exito.ERROR.name())) {
+                        System.out.println("Listando dados da chave " + randomKey);
+                        System.out.println("exito: " + getReply.getExito() + "\n" + "valor" + "\n");
+                    }
+                }
+
+                System.out.println("Test de STRESS finalizado!");
+                break;
             } catch (StatusRuntimeException e) {
                 logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-                return "";
+                System.out.println(e.getStatus());
+                break;
             } catch (Exception e) {
-                return e.getMessage();
+                System.out.println(e.getMessage());
+                break;
             }
         }
     }

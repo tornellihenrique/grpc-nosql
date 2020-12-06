@@ -195,7 +195,7 @@ public class GrpcShell {
 
             if (input.startsWith(Commands.TEST_STRESS)) {
                 System.out.println("Iniciando teste de Stress...");
-                System.out.println(client.getTestService().stressTest());
+                client.getTestService().stressTest();
                 continue;
             }
 
