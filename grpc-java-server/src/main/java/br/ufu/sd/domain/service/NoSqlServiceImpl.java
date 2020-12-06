@@ -150,16 +150,18 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 			Valor valor = database.get(request.getChave());
 
 			if (valor.getVersao() == request.getVersao()) {
+				Valor newValue = Valor.newBuilder(valor)
+						.setVersao(valor.getVersao()+1)
+						.setObjeto(request.getObjeto())
+						.build();
+
 				synchronized (database) {
-					database.put(request.getChave(), Valor.newBuilder(valor)
-							.setVersao(valor.getVersao())
-							.setObjeto(request.getObjeto())
-							.build());
+					database.put(request.getChave(), newValue);
 				}
 
 				responseObserver.onNext(TestAndSetReply.newBuilder()
 						.setExito(Exito.SUCCESS)
-						.setValor(valor)
+						.setValor(newValue)
 						.build());
 			} else {
 				responseObserver.onNext(TestAndSetReply.newBuilder()

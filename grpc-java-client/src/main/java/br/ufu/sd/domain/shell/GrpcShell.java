@@ -65,7 +65,16 @@ public class GrpcShell {
 //        handleSignals();
 
         System.out.print("##########################################\n" +
-                "########### NOSQL SHELL CLIENT ###########\n" +
+                "\n" +
+                "███▄▄▄▄    ▄██████▄     ▄████████ ████████▄    ▄█             ▄████████  ▄█        ▄█     ▄████████ ███▄▄▄▄       ███     \n" +
+                "███▀▀▀██▄ ███    ███   ███    ███ ███    ███  ███            ███    ███ ███       ███    ███    ███ ███▀▀▀██▄ ▀█████████▄ \n" +
+                "███   ███ ███    ███   ███    █▀  ███    ███  ███            ███    █▀  ███       ███▌   ███    █▀  ███   ███    ▀███▀▀██ \n" +
+                "███   ███ ███    ███   ███        ███    ███  ███            ███        ███       ███▌  ▄███▄▄▄     ███   ███     ███   ▀ \n" +
+                "███   ███ ███    ███ ▀███████████ ███    ███  ███            ███        ███       ███▌ ▀▀███▀▀▀     ███   ███     ███     \n" +
+                "███   ███ ███    ███          ███ ███    ███  ███            ███    █▄  ███       ███    ███    █▄  ███   ███     ███     \n" +
+                "███   ███ ███    ███    ▄█    ███ ███  ▀ ███  ███▌    ▄      ███    ███ ███▌    ▄ ███    ███    ███ ███   ███     ███     \n" +
+                " ▀█   █▀   ▀██████▀   ▄████████▀   ▀██████▀▄█ █████▄▄██      ████████▀  █████▄▄██ █▀     ██████████  ▀█   █▀     ▄████▀   \n" +
+                "                                              ▀                         ▀                                                 \n\n" +
                 "##########################################\n" +
                 "\n" +
                 "##########################################\n" +
@@ -152,7 +161,37 @@ public class GrpcShell {
                 continue;
             }
 
-            System.out.println("Comando inválido ಠ_ಠ"); //TODO Remover emoji
+            if (input.startsWith(Commands.TEST_GET)) {
+                System.out.println("Iniciando teste de Get...");
+                System.out.println(client.getTestService().testGet());
+                continue;
+            }
+
+            if (input.startsWith(Commands.TEST_DEL)) {
+                System.out.println("Iniciando teste de Del...");
+                System.out.println(client.getTestService().testDel());
+                continue;
+            }
+
+            if (input.startsWith(Commands.TEST_DEL_VER)) {
+                System.out.println("Iniciando teste de DelVer...");
+                System.out.println(client.getTestService().testDelVer());
+                continue;
+            }
+
+            if (input.startsWith(Commands.TEST_TEST_AND_SET)) {
+                System.out.println("Iniciando teste de TestAndSet...");
+                System.out.println(client.getTestService().testTestAndSet());
+                continue;
+            }
+
+            if (input.startsWith(Commands.TEST_STRESS)) {
+                System.out.println("Iniciando teste de Stress...");
+                System.out.println(client.getTestService().stressTest());
+                continue;
+            }
+
+            System.out.println("Comando inválido...");
         }
     }
 
