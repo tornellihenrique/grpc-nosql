@@ -120,7 +120,15 @@ public class GrpcShell {
                         "\t- /testSet\n" +
                         "\t\t> Realiza testes no serviço SET da API\n" +
                         "\t- /testGet\n" +
-                        "\t\t> Realiza testes no serviço GET da API");
+                        "\t\t> Realiza testes no serviço GET da API\n" +
+                        "\t- /testDel\n" +
+                        "\t\t> Realiza testes no serviço DEL da API\n" +
+                        "\t- /testDelVer\n" +
+                        "\t\t> Realiza testes no serviço DEL por versão da API\n" +
+                        "\t- /testTestAndSet\n" +
+                        "\t\t> Realiza testes no teste do serviço SET da API\n" +
+                        "\t- /testStress\n" +
+                        "\t\t> Realiza testes de STRESS da API\n");
 
                 continue;
             }
