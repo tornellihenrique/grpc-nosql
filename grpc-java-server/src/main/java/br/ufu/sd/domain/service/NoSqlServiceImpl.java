@@ -56,7 +56,10 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 			}else {
 				synchronized (database) {
 					database.put(request.getChave(), 
-							Valor.newBuilder(valorExistente).setVersao(valorExistente.getVersao()+1).setObjeto(request.getObjeto()).build());
+							Valor.newBuilder(valorExistente)
+									.setVersao(valorExistente.getVersao()+1)
+									.setTimestamp(request.getTimestamp())
+									.setObjeto(request.getObjeto()).build());
 				}
 				
 				reply = SetReply
