@@ -1,6 +1,6 @@
 # NoSQL DB with gRPC
 
-A simple HashTable based NoSQL database project that implements the [RPC Communication](https://en.wikipedia.org/wiki/Remote_procedure_call) throw the Google framework [gRPC](https://grpc.io/) using the Java (8 or higher) language.
+A simple HashTable based NoSQL database project that implements the [RPC Communication](https://en.wikipedia.org/wiki/Remote_procedure_call) through the Google framework [gRPC](https://grpc.io/) using the Java (8 or higher) language.
 
 This is a final project for the Distributed Systems course from the program Information Systems in the university [UFU](http://www.ufu.br/).
 
