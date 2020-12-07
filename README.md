@@ -35,8 +35,10 @@ $ mvn clean install
 $ cd ..
 ```
 
-It will generate two jars on each build: a stard one, and another one with dependencies.
+It will generate two jars on each build: a standard one, and another one with dependencies.
+
 In the server, the jar is at `grpc-nosql/grpc-java-server/target/grpc-java-server-{version}-jar-with-dependencies.jar`.
+
 In the client, the jar is at `grpc-nosql/grpc-java-client/target/grpc-java-client-{version}-jar-with-dependencies.jar`.
 
 3. Starting server
