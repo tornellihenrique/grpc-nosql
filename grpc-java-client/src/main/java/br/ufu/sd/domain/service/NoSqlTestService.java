@@ -27,7 +27,7 @@ public class NoSqlTestService {
         this.blockingStub = blockingStub;
     }
 
-    public String testSet() {
+    public void testSet() {
         while(true) {
             BigInteger randomKey = BigInteger.valueOf((long) (Math.random() * 10000) + 1);
 
@@ -75,6 +75,8 @@ public class NoSqlTestService {
                     throw new Exception("Erro na primeira verificação");
                 }
 
+                System.out.println("Primeira verificação bem sucedida");
+
                 setReply = blockingStub.set(setRequest2);
 
                 if (
@@ -90,22 +92,28 @@ public class NoSqlTestService {
                     throw new Exception("Erro na segunda verificação");
                 }
 
+                System.out.println("Segunda verificação bem sucedida");
+
                 setReply = blockingStub.set(setRequest3);
 
                 if (setReply.getExito().name().equalsIgnoreCase(Exito.ERROR.name())) {
                     throw new Exception("Erro na terceira verificação");
                 }
 
+                System.out.println("Terceira verificação bem sucedida");
+
                 blockingStub.del(DelRequest.newBuilder()
                         .setChave(BigInt.newBuilder().setValue(ByteString.copyFrom(randomKey.toByteArray())))
                         .build());
 
-                return "Teste de Set bem sucedido";
+                System.out.println("Todos os possiveis resultados foram obtidos! Teste finalizado com sucesso!");
+                break;
             } catch (StatusRuntimeException e) {
                 logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-                return "";
+                break;
             } catch (Exception e) {
-                return e.getMessage();
+                System.out.println(e.getMessage());
+                break;
             }
         }
     }

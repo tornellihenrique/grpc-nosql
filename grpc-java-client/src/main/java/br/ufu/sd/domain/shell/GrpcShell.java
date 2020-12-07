@@ -165,7 +165,7 @@ public class GrpcShell {
 
             if (input.startsWith(Commands.TEST_SET)) {
                 System.out.println("Iniciando teste de Set...");
-                System.out.println(client.getTestService().testSet());
+                client.getTestService().testSet();
                 continue;
             }
 
