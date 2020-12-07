@@ -43,7 +43,8 @@ In the client, the jar is at `grpc-nosql/grpc-java-client/target/grpc-java-clien
 
 3. Starting server
 ```bash
-# Remember, the local databash backup will be created at your terminal located folder, in this case, the source folder 'grpc-nosql'
+# Remember, the local database backup will be created at your terminal located folder,
+# in this case, at the source folder 'grpc-nosql'
 $ java -jar grpc-java-server/target/grpc-java-server-{version}-jar-with-dependencies.jar
 ```
 
