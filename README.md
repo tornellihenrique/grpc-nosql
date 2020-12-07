@@ -50,7 +50,7 @@ $ java -jar grpc-java-server/target/grpc-java-server-{version}-jar-with-dependen
 **Now the server will be running at the 50051 port and will be backing up every 5 seconds.**
 
 4. Starting client
-```
+```bash
 # You can optionally pass as argument an username for the client welcome message
 $ java -jar grpc-java-client/target/grpc-java-client-{version}-jar-with-dependencies.jar CustomUsername
 ```
