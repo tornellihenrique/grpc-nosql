@@ -1,37 +1,38 @@
 package br.ufu.sd.domain.service;
 
-import java.time.Instant;
-import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
+import br.ufu.sd.NoSqlServer;
 import br.ufu.sd.api.contract.reply.*;
 import br.ufu.sd.api.contract.request.*;
 import br.ufu.sd.core.grpc.NoSqlServiceGrpc.NoSqlServiceImplBase;
-import br.ufu.sd.core.maintenance.DatabaseMaintenance;
+import br.ufu.sd.core.maintenance.PersistenceClient;
 import br.ufu.sd.domain.model.BigInt;
 import br.ufu.sd.domain.model.Exito;
+import br.ufu.sd.domain.model.RaftAddressConfig;
 import br.ufu.sd.domain.model.Valor;
 import io.grpc.stub.StreamObserver;
 
 public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 
-	private final Map<BigInt, Valor> database;
-	private final DatabaseMaintenance<BigInt, Valor> databaseRecovery;
-	
+	private static final Logger logger = Logger.getLogger(NoSqlServer.class.getName());
 
-	public NoSqlServiceImpl(DatabaseMaintenance<BigInt, Valor> databaseRecovery) {
-		this.databaseRecovery = databaseRecovery;
-		this.database = databaseRecovery.recover();
+	private final PersistenceClient client;
+
+	public NoSqlServiceImpl(String groupUuid, List<RaftAddressConfig> addressConfigList) throws Exception {
+		client = new PersistenceClient(groupUuid, addressConfigList);
 	}
 
 	@Override
 	public synchronized void set(SetRequest request, StreamObserver<SetReply> responseObserver) {
 		SetReply reply = null;
 		
-		if(! database.containsKey(request.getChave())) {
+		if(!client.containsKey(request.getChave())) {
 			
-			synchronized (database) {
-				database.put(request.getChave(), Valor.newBuilder()
+			synchronized (client) {
+				client.set(request.getChave(), Valor.newBuilder()
 			               .setObjeto(request.getObjeto())
 			               .setVersao(1)
 			               .setTimestamp(request.getTimestamp()).build());
@@ -43,7 +44,7 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 				    	.build();
 		}else {
 			
-			Valor valorExistente = database.get(request.getChave());
+			Valor valorExistente = client.get(request.getChave());
 			
 			if (valorExistente.getTimestamp() == request.getTimestamp() 
 					&& valorExistente.getObjeto().getFieldsMap().equals(request.getObjeto().getFieldsMap())) {
@@ -54,8 +55,8 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 								.setValor(valorExistente)
 						    		.build();
 			}else {
-				synchronized (database) {
-					database.put(request.getChave(), 
+				synchronized (client) {
+					client.set(request.getChave(),
 							Valor.newBuilder(valorExistente)
 									.setVersao(valorExistente.getVersao()+1)
 									.setTimestamp(request.getTimestamp())
@@ -75,10 +76,10 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 
 	@Override
 	public void get(GetRequest request, StreamObserver<GetReply> responseObserver) {
-		if (database.containsKey(request.getChave())) {
+		if (client.containsKey(request.getChave())) {
 			responseObserver.onNext(GetReply.newBuilder()
 					.setExito(Exito.SUCCESS)
-					.setValor(database.get(request.getChave()))
+					.setValor(client.get(request.getChave()))
 					.build());
 			responseObserver.onCompleted();
 
@@ -93,11 +94,11 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 
 	@Override
 	public synchronized void del(DelRequest request, StreamObserver<DelReply> responseObserver) {
-		if (database.containsKey(request.getChave())) {
-			Valor valor = database.get(request.getChave());
+		if (client.containsKey(request.getChave())) {
+			Valor valor = client.get(request.getChave());
 
-			synchronized (database) {
-				database.remove(request.getChave());
+			synchronized (client) {
+				client.del(request.getChave());
 			}
 
 			responseObserver.onNext(DelReply.newBuilder()
@@ -117,12 +118,12 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 
 	@Override
 	public synchronized void delVer(DelVerRequest request, StreamObserver<DelVerReply> responseObserver) {
-		if (database.containsKey(request.getChave())) {
-			Valor valor = database.get(request.getChave());
+		if (client.containsKey(request.getChave())) {
+			Valor valor = client.get(request.getChave());
 
 			if (valor.getVersao() == request.getVersao()) {
-				synchronized (database) {
-					database.remove(request.getChave());
+				synchronized (client) {
+					client.del(request.getChave());
 				}
 
 				responseObserver.onNext(DelVerReply.newBuilder()
@@ -149,8 +150,8 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 
 	@Override
 	public synchronized void testAndSet(TestAndSetRequest request, StreamObserver<TestAndSetReply> responseObserver) {
-		if (database.containsKey(request.getChave())) {
-			Valor valor = database.get(request.getChave());
+		if (client.containsKey(request.getChave())) {
+			Valor valor = client.get(request.getChave());
 
 			if (valor.getVersao() == request.getVersao()) {
 				Valor newValue = Valor.newBuilder(valor)
@@ -158,8 +159,8 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 						.setObjeto(request.getObjeto())
 						.build();
 
-				synchronized (database) {
-					database.put(request.getChave(), newValue);
+				synchronized (client) {
+					client.set(request.getChave(), newValue);
 				}
 
 				responseObserver.onNext(TestAndSetReply.newBuilder()
@@ -182,9 +183,5 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 				.setExito(Exito.ERROR_NE)
 				.build());
 		responseObserver.onCompleted();
-	}
-	
-	public Map<BigInt, Valor> getDatabase(){
-		return database;
 	}
 }
