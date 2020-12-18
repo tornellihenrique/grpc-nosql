@@ -9,11 +9,6 @@ import java.util.concurrent.TimeUnit;
 
 public class NoSqlClient {
 
-    /**
-     MEME GENERATOR
-     * Greet server. If provided, the first element of {@code args} is the name to use in the
-     * greeting. The second argument is the target server.
-     */
     public static void main(String[] args) throws Exception {
         String user = "No name user";
         // Access a service running on the local machine on port 50051

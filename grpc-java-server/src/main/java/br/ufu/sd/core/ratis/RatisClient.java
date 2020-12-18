@@ -3,6 +3,7 @@ package br.ufu.sd.core.ratis;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -24,14 +25,14 @@ import org.apache.ratis.thirdparty.com.google.protobuf.ByteString;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import br.ufu.sd.GrpcRouterServer;
+import br.ufu.sd.RouterServer;
 import br.ufu.sd.domain.model.BigInt;
 import br.ufu.sd.domain.model.RaftAddressConfig;
 import br.ufu.sd.domain.model.Valor;
 
 public class RatisClient {
 
-    private static final Logger logger = Logger.getLogger(GrpcRouterServer.class.getName());
+    private static final Logger logger = Logger.getLogger(RatisClient.class.getName());
 
     private final RaftClient client;
 
@@ -66,9 +67,15 @@ public class RatisClient {
     }
 
     public void set(BigInt key, Valor value) {
+        logRatisCall("SET", "Key: " + key.toString() + ", Value: " + value.toString());
+
         RaftClientReply raftResponse = null;
+
+        String finalKey = Base64.getEncoder().encodeToString(key.toByteArray());
+        String finalValue = Base64.getEncoder().encodeToString(value.toByteArray());
+
         try {
-            raftResponse = client.send(Message.valueOf("set:" + key.toByteString() + ":" + value.toByteString()));
+            raftResponse = client.send(Message.valueOf("set:" + finalKey + ":" + finalValue));
         } catch (IOException e) {
             logger.log(Level.WARNING, "Error on Persistence Set");
             return;
@@ -79,9 +86,14 @@ public class RatisClient {
     }
 
     public Valor get(BigInt key) {
+        logRatisCall("GET", "Key: " + key.toString());
+
         RaftClientReply raftResponse = null;
+
+        String finalKey = Base64.getEncoder().encodeToString(key.toByteArray());
+
         try {
-            raftResponse = client.sendReadOnly(Message.valueOf("get:" + key.toByteString()));
+            raftResponse = client.sendReadOnly(Message.valueOf("get:" + finalKey));
         } catch (IOException e) {
             logger.log(Level.WARNING, "Error on Persistence Get");
             return null;
@@ -90,8 +102,10 @@ public class RatisClient {
         String response = raftResponse.getMessage().getContent().toString(Charset.defaultCharset());
         logger.log(Level.INFO, response);
 
+        byte[] finalValueResponse = Base64.getDecoder().decode(raftResponse.getMessage().getContent().toString());
+
         try {
-            return Valor.parseFrom(raftResponse.getMessage().getContent().toString().getBytes());
+            return Valor.parseFrom(finalValueResponse);
         } catch (InvalidProtocolBufferException e) {
             logger.log(Level.WARNING, "Error on parsing Persistence Get response");
             return null;
@@ -99,9 +113,14 @@ public class RatisClient {
     }
 
     public void del(BigInt key) {
+        logRatisCall("DEL", "Key: " + key.toString());
+
         RaftClientReply raftResponse = null;
+
+        String finalKey = Base64.getEncoder().encodeToString(key.toByteArray());
+
         try {
-            raftResponse = client.send(Message.valueOf("del:" + key.toByteString()));
+            raftResponse = client.send(Message.valueOf("del:" + finalKey));
         } catch (IOException e) {
             logger.log(Level.WARNING, "Error on Persistence Del");
             return;
@@ -112,9 +131,14 @@ public class RatisClient {
     }
 
     public Boolean containsKey(BigInt key) {
+        logRatisCall("CONTAINS_KEY", "Key: " + key.toString());
+
         RaftClientReply raftResponse = null;
+
+        String finalKey = Base64.getEncoder().encodeToString(key.toByteArray());
+
         try {
-            raftResponse = client.sendReadOnly(Message.valueOf("containsKey:" + key.toByteString()));
+            raftResponse = client.sendReadOnly(Message.valueOf("containsKey:" + finalKey));
         } catch (IOException e) {
             logger.log(Level.WARNING, "Error on Persistence ContainsKey");
             return null;
@@ -123,6 +147,10 @@ public class RatisClient {
         String response = raftResponse.getMessage().getContent().toString(Charset.defaultCharset());
         logger.log(Level.INFO, response);
 
-        return raftResponse.getMessage().toString().equalsIgnoreCase("NULL");
+        return Boolean.valueOf(raftResponse.getMessage().toString());
+    }
+
+    private void logRatisCall(String name, String body) {
+        logger.info("Ratis Method " + name + ": " + body);
     }
 }

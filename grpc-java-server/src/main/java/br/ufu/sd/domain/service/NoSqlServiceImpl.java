@@ -1,15 +1,13 @@
 package br.ufu.sd.domain.service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
-import br.ufu.sd.GrpcRouterServer;
+import br.ufu.sd.RouterServer;
 import br.ufu.sd.api.contract.reply.*;
 import br.ufu.sd.api.contract.request.*;
 import br.ufu.sd.core.grpc.NoSqlServiceGrpc.NoSqlServiceImplBase;
 import br.ufu.sd.core.ratis.RatisClient;
-import br.ufu.sd.domain.model.BigInt;
 import br.ufu.sd.domain.model.Exito;
 import br.ufu.sd.domain.model.RaftAddressConfig;
 import br.ufu.sd.domain.model.Valor;
@@ -17,7 +15,7 @@ import io.grpc.stub.StreamObserver;
 
 public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 
-	private static final Logger logger = Logger.getLogger(GrpcRouterServer.class.getName());
+	private static final Logger logger = Logger.getLogger(NoSqlServiceImpl.class.getName());
 
 	private final RatisClient client;
 

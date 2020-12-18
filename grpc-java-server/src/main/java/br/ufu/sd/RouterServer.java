@@ -31,8 +31,8 @@ import io.grpc.ServerBuilder;
 /**
  * Server that manages startup/shutdown of a {@code Greeter} server.
  */
-public class GrpcRouterServer {
-  private static final Logger logger = Logger.getLogger(GrpcRouterServer.class.getName());
+public class RouterServer {
+  private static final Logger logger = Logger.getLogger(RouterServer.class.getName());
 
   private Server server;
 
@@ -46,7 +46,7 @@ public class GrpcRouterServer {
 
       addressList.add(new RaftAddressConfig("p1", "127.0.0.1", 3000));
       addressList.add(new RaftAddressConfig("p2", "127.0.0.1", 3500));
-      addressList.add(new RaftAddressConfig("p2", "127.0.0.1", 4000));
+      addressList.add(new RaftAddressConfig("p3", "127.0.0.1", 4000));
 
       noSqlService = new NoSqlServiceImpl(grouUuid, addressList);
     } catch (Exception e) {
@@ -65,7 +65,7 @@ public class GrpcRouterServer {
       // Use stderr here since the logger may have been reset by its JVM shutdown hook.
       System.err.println("*** shutting down gRPC server since JVM is shutting down");
       try {
-          GrpcRouterServer.this.stop();
+          RouterServer.this.stop();
       } catch (InterruptedException e) {
         e.printStackTrace(System.err);
       }
@@ -92,7 +92,7 @@ public class GrpcRouterServer {
    * Main launches the server from the command line.
    */
   public static void main(String[] args) throws IOException, InterruptedException {
-    final GrpcRouterServer server = new GrpcRouterServer();
+    final RouterServer server = new RouterServer();
     server.start(50051);
     server.blockUntilShutdown();
   }

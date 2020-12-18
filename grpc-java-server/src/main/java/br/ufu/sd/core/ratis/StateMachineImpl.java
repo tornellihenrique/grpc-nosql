@@ -1,6 +1,6 @@
 package br.ufu.sd.core.ratis;
 
-import br.ufu.sd.GrpcRouterServer;
+import br.ufu.sd.RouterServer;
 import org.apache.ratis.proto.RaftProtos;
 import org.apache.ratis.protocol.Message;
 import org.apache.ratis.statemachine.TransactionContext;
@@ -24,7 +24,7 @@ public class StateMachineImpl extends BaseStateMachine {
         public static final String CONTAINS_KEY = "containsKey";
     }
 
-    private static final Logger logger = Logger.getLogger(GrpcRouterServer.class.getName());
+    private static final Logger logger = Logger.getLogger(StateMachineImpl.class.getName());
 
     private final Map<String, String> database = new ConcurrentHashMap<>();
 
@@ -35,15 +35,23 @@ public class StateMachineImpl extends BaseStateMachine {
 
         String response = "";
 
-        if (queryParameters.length != 2) {
+        if (queryParameters.length == 0) {
             response = "Invalid parameters";
         }
 
         if (queryParameters[0].equals(Commands.GET)) {
+            if (queryParameters.length != 2) {
+                response = "Invalid GET parameters";
+            }
+
             response = get(queryParameters[1]);
         }
 
         if (queryParameters[0].equals(Commands.CONTAINS_KEY)) {
+            if (queryParameters.length != 2) {
+                response = "Invalid CONTAINS_KEY parameters";
+            }
+
             response = containsKey(queryParameters[1]);
         }
 
@@ -54,24 +62,36 @@ public class StateMachineImpl extends BaseStateMachine {
     @Override
     public CompletableFuture<Message> applyTransaction(TransactionContext trx) {
         final RaftProtos.LogEntryProto entry = trx.getLogEntry();
-        final String[] opKeyValue = entry.getStateMachineLogEntry().getLogData().toString(Charset.defaultCharset()).split(":");
+        final String query = entry.getStateMachineLogEntry().getLogData().toString(Charset.defaultCharset());
+        final String[] queryParameters = query.split(":");
 
-        final String result = opKeyValue[0]+ ":"+ database.put(opKeyValue[1], opKeyValue[2]);
+        String response = "";
 
-        final CompletableFuture<Message> f = CompletableFuture.completedFuture(Message.valueOf(result));
-
-        final RaftProtos.RaftPeerRole role = trx.getServerRole();
-        LOG.info("{}:{} {} {}={}", role, getId(), opKeyValue[0], opKeyValue[1], opKeyValue[2]);
-
-        if (LOG.isTraceEnabled()) {
-            LOG.trace("{}: key/values={}", getId(), database);
+        if (queryParameters.length == 0) {
+            response = "Invalid parameters";
         }
 
-        return f;
+        if (queryParameters[0].equals(Commands.SET)) {
+            if (queryParameters.length != 3) {
+                response = "Invalid SET parameters";
+            }
+
+            response = set(queryParameters[1], queryParameters[2]);
+        }
+
+        if (queryParameters[0].equals(Commands.DEL)) {
+            if (queryParameters.length != 2) {
+                response = "Invalid DEL parameters";
+            }
+
+            response = del(queryParameters[1]);
+        }
+
+        return CompletableFuture.completedFuture(Message.valueOf(response));
     }
 
-    private String set() {
-        return null;
+    private String set(String key, String value) {
+        return database.put(key, value);
     }
 
     private String get(String key) {
@@ -79,8 +99,8 @@ public class StateMachineImpl extends BaseStateMachine {
         return database.get(key);
     }
 
-    private String del() {
-        return null;
+    private String del(String key) {
+        return database.remove(key);
     }
 
     private String containsKey(String key) {
