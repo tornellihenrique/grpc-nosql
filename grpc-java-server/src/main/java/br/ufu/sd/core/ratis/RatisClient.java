@@ -1,42 +1,47 @@
-package br.ufu.sd.core.maintenance;
-
-import br.ufu.sd.NoSqlServer;
-import br.ufu.sd.domain.model.BigInt;
-import br.ufu.sd.domain.model.RaftAddressConfig;
-import br.ufu.sd.domain.model.Valor;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.protobuf.InvalidProtocolBufferException;
-import org.apache.ratis.client.RaftClient;
-import org.apache.ratis.conf.Parameters;
-import org.apache.ratis.conf.RaftProperties;
-import org.apache.ratis.grpc.GrpcFactory;
-import org.apache.ratis.protocol.*;
-import org.apache.ratis.thirdparty.com.google.protobuf.ByteString;
+package br.ufu.sd.core.ratis;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class PersistenceClient {
+import org.apache.ratis.client.RaftClient;
+import org.apache.ratis.conf.Parameters;
+import org.apache.ratis.conf.RaftProperties;
+import org.apache.ratis.grpc.GrpcFactory;
+import org.apache.ratis.protocol.ClientId;
+import org.apache.ratis.protocol.Message;
+import org.apache.ratis.protocol.RaftClientReply;
+import org.apache.ratis.protocol.RaftGroup;
+import org.apache.ratis.protocol.RaftGroupId;
+import org.apache.ratis.protocol.RaftPeer;
+import org.apache.ratis.protocol.RaftPeerId;
+import org.apache.ratis.thirdparty.com.google.protobuf.ByteString;
 
-    private static final Logger logger = Logger.getLogger(NoSqlServer.class.getName());
+import com.google.protobuf.InvalidProtocolBufferException;
+
+import br.ufu.sd.GrpcRouterServer;
+import br.ufu.sd.domain.model.BigInt;
+import br.ufu.sd.domain.model.RaftAddressConfig;
+import br.ufu.sd.domain.model.Valor;
+
+public class RatisClient {
+
+    private static final Logger logger = Logger.getLogger(GrpcRouterServer.class.getName());
 
     private final RaftClient client;
 
-    public PersistenceClient(String groupUuid, List<RaftAddressConfig> addressConfigList) throws Exception {
+    public RatisClient(String groupUuid, List<RaftAddressConfig> addressConfigList) throws Exception {
         if (groupUuid == null) {
-            throw new Exception("Inválid Group UUID");
+            throw new Exception("Invalid Group UUID");
         }
 
         if (groupUuid.length() != 16) {
-            throw new Exception("Inválid Group UUID - Must have 16 characters");
+            throw new Exception("Invalid Group UUID - Must have 16 characters");
         }
 
         Map<String, InetSocketAddress> id2addr = addressConfigList
@@ -76,7 +81,7 @@ public class PersistenceClient {
     public Valor get(BigInt key) {
         RaftClientReply raftResponse = null;
         try {
-            raftResponse = client.send(Message.valueOf("get:" + key.toString()));
+            raftResponse = client.sendReadOnly(Message.valueOf("get:" + key.toString()));
         } catch (IOException e) {
             logger.log(Level.WARNING, "Error on Persistence Get");
             return null;
@@ -109,7 +114,7 @@ public class PersistenceClient {
     public Boolean containsKey(BigInt key) {
         RaftClientReply raftResponse = null;
         try {
-            raftResponse = client.send(Message.valueOf("containsKey:" + key.toString()));
+            raftResponse = client.sendReadOnly(Message.valueOf("containsKey:" + key.toString()));
         } catch (IOException e) {
             logger.log(Level.WARNING, "Error on Persistence ContainsKey");
             return null;
