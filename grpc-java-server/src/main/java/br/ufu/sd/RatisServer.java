@@ -18,17 +18,17 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class RatisServer
-{
+public class RatisServer {
 
-    //Parametros: myId
-    public static void main(String[] args) throws IOException, InterruptedException
-    {
-        String raftGroupId = "raft_group____um"; // 16 caracteres.
+    private static final Logger logger = Logger.getLogger(GrpcRouterServer.class.getName());
 
-        //Setup for node all nodes.
+    public static void main(String[] args) throws IOException, InterruptedException {
+        String raftGroupId = "raft_group____um";
+
         Map<String,InetSocketAddress> id2addr = new HashMap<>();
         id2addr.put("p1", new InetSocketAddress("127.0.0.1", 3000));
         id2addr.put("p2", new InetSocketAddress("127.0.0.1", 3500));
@@ -39,31 +39,27 @@ public class RatisServer
                                           .map(e -> new RaftPeer(RaftPeerId.valueOf(e.getKey()), e.getValue()))
                                           .collect(Collectors.toList());
 
-        //Setup for this node.
-        RaftPeerId myId = RaftPeerId.valueOf(args[0]);
+        RaftPeerId id = RaftPeerId.valueOf(args[0]);
 
-        if (addresses.stream().noneMatch(p -> p.getId().equals(myId)))
-        {
-            System.out.println("Identificador " + args[0] + " é inválido.");
+        if (addresses.stream().noneMatch(p -> p.getId().equals(id))) {
+            logger.log(Level.WARNING,"Invalid identifier: " + args[0]);
             System.exit(1);
         }
 
         RaftProperties properties = new RaftProperties();
         properties.setInt(GrpcConfigKeys.OutputStream.RETRY_TIMES_KEY, Integer.MAX_VALUE);
         GrpcConfigKeys.Server.setPort(properties, id2addr.get(args[0]).getPort());
-        RaftServerConfigKeys.setStorageDir(properties, Collections.singletonList(new File("/tmp/" + myId)));
+        RaftServerConfigKeys.setStorageDir(properties, Collections.singletonList(new File("/tmp/" + id)));
 
-
-        //Join the group of processes.
         final RaftGroup raftGroup = RaftGroup.valueOf(RaftGroupId.valueOf(ByteString.copyFromUtf8(raftGroupId)), addresses);
         RaftServer raftServer = RaftServer.newBuilder()
-                .setServerId(myId)
+                .setServerId(id)
                 .setStateMachine(new StateMachineImpl()).setProperties(properties)
                 .setGroup(raftGroup)
                 .build();
         raftServer.start();
 
-        while(raftServer.getLifeCycleState() != LifeCycle.State.CLOSED) {
+        while (raftServer.getLifeCycleState() != LifeCycle.State.CLOSED) {
             TimeUnit.SECONDS.sleep(1);
         }
     }

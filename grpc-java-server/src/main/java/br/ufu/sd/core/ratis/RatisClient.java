@@ -68,7 +68,7 @@ public class RatisClient {
     public void set(BigInt key, Valor value) {
         RaftClientReply raftResponse = null;
         try {
-            raftResponse = client.send(Message.valueOf("set:" + key.toString() + ":" + value.toString()));
+            raftResponse = client.send(Message.valueOf("set:" + key.toByteString() + ":" + value.toByteString()));
         } catch (IOException e) {
             logger.log(Level.WARNING, "Error on Persistence Set");
             return;
@@ -81,7 +81,7 @@ public class RatisClient {
     public Valor get(BigInt key) {
         RaftClientReply raftResponse = null;
         try {
-            raftResponse = client.sendReadOnly(Message.valueOf("get:" + key.toString()));
+            raftResponse = client.sendReadOnly(Message.valueOf("get:" + key.toByteString()));
         } catch (IOException e) {
             logger.log(Level.WARNING, "Error on Persistence Get");
             return null;
@@ -101,7 +101,7 @@ public class RatisClient {
     public void del(BigInt key) {
         RaftClientReply raftResponse = null;
         try {
-            raftResponse = client.send(Message.valueOf("del:" + key.toString()));
+            raftResponse = client.send(Message.valueOf("del:" + key.toByteString()));
         } catch (IOException e) {
             logger.log(Level.WARNING, "Error on Persistence Del");
             return;
@@ -114,7 +114,7 @@ public class RatisClient {
     public Boolean containsKey(BigInt key) {
         RaftClientReply raftResponse = null;
         try {
-            raftResponse = client.sendReadOnly(Message.valueOf("containsKey:" + key.toString()));
+            raftResponse = client.sendReadOnly(Message.valueOf("containsKey:" + key.toByteString()));
         } catch (IOException e) {
             logger.log(Level.WARNING, "Error on Persistence ContainsKey");
             return null;
