@@ -67,15 +67,15 @@ public class RatisClient {
     }
 
     public void set(BigInt key, Valor value) {
-        logRatisCall("SET", "Key: " + key.toString() + ", Value: " + value.toString());
-
         RaftClientReply raftResponse = null;
 
-        String finalKey = Base64.getEncoder().encodeToString(key.toByteArray());
+        String finalKey = Base64.getEncoder().encodeToString(key.getValue().toByteArray());
         String finalValue = Base64.getEncoder().encodeToString(value.toByteArray());
+        String query = "set:" + finalKey + ":" + finalValue;
+        logRatisCall("SET", query);
 
         try {
-            raftResponse = client.send(Message.valueOf("set:" + finalKey + ":" + finalValue));
+            raftResponse = client.send(Message.valueOf(query));
         } catch (IOException e) {
             logger.log(Level.WARNING, "Error on Persistence Set");
             return;
@@ -86,14 +86,14 @@ public class RatisClient {
     }
 
     public Valor get(BigInt key) {
-        logRatisCall("GET", "Key: " + key.toString());
-
         RaftClientReply raftResponse = null;
 
-        String finalKey = Base64.getEncoder().encodeToString(key.toByteArray());
+        String finalKey = Base64.getEncoder().encodeToString(key.getValue().toByteArray());
+        String query = "get:" + finalKey;
+        logRatisCall("GET", query);
 
         try {
-            raftResponse = client.sendReadOnly(Message.valueOf("get:" + finalKey));
+            raftResponse = client.sendReadOnly(Message.valueOf(query));
         } catch (IOException e) {
             logger.log(Level.WARNING, "Error on Persistence Get");
             return null;
@@ -102,7 +102,7 @@ public class RatisClient {
         String response = raftResponse.getMessage().getContent().toString(Charset.defaultCharset());
         logger.log(Level.INFO, response);
 
-        byte[] finalValueResponse = Base64.getDecoder().decode(raftResponse.getMessage().getContent().toString());
+        byte[] finalValueResponse = Base64.getDecoder().decode(response);
 
         try {
             return Valor.parseFrom(finalValueResponse);
@@ -113,14 +113,14 @@ public class RatisClient {
     }
 
     public void del(BigInt key) {
-        logRatisCall("DEL", "Key: " + key.toString());
-
         RaftClientReply raftResponse = null;
 
-        String finalKey = Base64.getEncoder().encodeToString(key.toByteArray());
+        String finalKey = Base64.getEncoder().encodeToString(key.getValue().toByteArray());
+        String query = "del:" + finalKey;
+        logRatisCall("DEL", query);
 
         try {
-            raftResponse = client.send(Message.valueOf("del:" + finalKey));
+            raftResponse = client.send(Message.valueOf(query));
         } catch (IOException e) {
             logger.log(Level.WARNING, "Error on Persistence Del");
             return;
@@ -131,14 +131,14 @@ public class RatisClient {
     }
 
     public Boolean containsKey(BigInt key) {
-        logRatisCall("CONTAINS_KEY", "Key: " + key.toString());
-
         RaftClientReply raftResponse = null;
 
-        String finalKey = Base64.getEncoder().encodeToString(key.toByteArray());
+        String finalKey = Base64.getEncoder().encodeToString(key.getValue().toByteArray());
+        String query = "containsKey:" + finalKey;
+        logRatisCall("CONTAINS_KEY", query);
 
         try {
-            raftResponse = client.sendReadOnly(Message.valueOf("containsKey:" + finalKey));
+            raftResponse = client.sendReadOnly(Message.valueOf(query));
         } catch (IOException e) {
             logger.log(Level.WARNING, "Error on Persistence ContainsKey");
             return null;
@@ -147,7 +147,7 @@ public class RatisClient {
         String response = raftResponse.getMessage().getContent().toString(Charset.defaultCharset());
         logger.log(Level.INFO, response);
 
-        return Boolean.valueOf(raftResponse.getMessage().toString());
+        return Boolean.valueOf(response);
     }
 
     private void logRatisCall(String name, String body) {

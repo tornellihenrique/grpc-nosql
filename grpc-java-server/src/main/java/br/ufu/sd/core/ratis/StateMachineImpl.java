@@ -91,7 +91,9 @@ public class StateMachineImpl extends BaseStateMachine {
     }
 
     private String set(String key, String value) {
-        return database.put(key, value);
+        logger.info("Using Set method on key: " + key + " and value: " + value);
+        database.put(key, value);
+        return "Database set success!";
     }
 
     private String get(String key) {
@@ -100,7 +102,9 @@ public class StateMachineImpl extends BaseStateMachine {
     }
 
     private String del(String key) {
-        return database.remove(key);
+        logger.info("Using Del method on key: " + key);
+        database.remove(key);
+        return "Database del success!";
     }
 
     private String containsKey(String key) {

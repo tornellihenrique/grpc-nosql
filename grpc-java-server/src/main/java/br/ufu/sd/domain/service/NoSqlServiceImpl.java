@@ -93,9 +93,7 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 		if (client.containsKey(request.getChave())) {
 			Valor valor = client.get(request.getChave());
 
-			synchronized (client) {
-				client.del(request.getChave());
-			}
+			client.del(request.getChave());
 
 			responseObserver.onNext(DelReply.newBuilder()
 					.setExito(Exito.SUCCESS)
@@ -118,9 +116,7 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 			Valor valor = client.get(request.getChave());
 
 			if (valor.getVersao() == request.getVersao()) {
-				synchronized (client) {
-					client.del(request.getChave());
-				}
+				client.del(request.getChave());
 
 				responseObserver.onNext(DelVerReply.newBuilder()
 						.setExito(Exito.SUCCESS)
@@ -155,13 +151,11 @@ public class NoSqlServiceImpl extends NoSqlServiceImplBase {
 						.setObjeto(request.getObjeto())
 						.build();
 
-				synchronized (client) {
-					client.set(request.getChave(), newValue);
-				}
+				client.set(request.getChave(), newValue);
 
 				responseObserver.onNext(TestAndSetReply.newBuilder()
 						.setExito(Exito.SUCCESS)
-						.setValor(newValue)
+						.setValor(valor)
 						.build());
 			} else {
 				responseObserver.onNext(TestAndSetReply.newBuilder()
