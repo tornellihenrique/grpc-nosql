@@ -42,6 +42,8 @@ It will generate two jars: a standard one, and another one with dependencies.
 
 3. Starting Database Server
 
+In the Database Server, the jar is at `grpc-nosql/grpc-java-server/target/database-server-jar-with-dependencies.jar`.
+
 The Ratis implementation is configured for use three instances and backup the data at `/tmp` folder:
 - `p1`: `127.0.0.1:3000`
 - `p2`: `127.0.0.1:3500`
@@ -60,7 +62,7 @@ $ java -jar grpc-nosql/grpc-java-server/target/database-server-jar-with-dependen
 
 4. Starting Router Server
 
-In the server, the jar is at `grpc-nosql/grpc-java-server/target/router-server-jar-with-dependencies.jar`.
+In the Router Server, the jar is at `grpc-nosql/grpc-java-server/target/router-server-jar-with-dependencies.jar`.
 
 ```bash
 $ java -jar grpc-java-server/target/router-server-jar-with-dependencies.jar
@@ -70,7 +72,7 @@ $ java -jar grpc-java-server/target/router-server-jar-with-dependencies.jar
 
 5. Starting client
 
-In the client, the jar is at `grpc-nosql/grpc-java-client/target/database-server-jar-with-dependencies.jar`.
+In the Client, the jar is at `grpc-nosql/grpc-java-client/target/database-server-jar-with-dependencies.jar`.
 
 ```bash
 # You can optionally pass as argument an username for the client welcome message
