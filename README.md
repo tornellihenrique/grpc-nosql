@@ -1,7 +1,7 @@
 # NoSQL DB with gRPC
 
 A simple HashTable based NoSQL database project that implements [RPC Communication](https://en.wikipedia.org/wiki/Remote_procedure_call) through [gRPC](https://grpc.io/), a framework made by Google.
-For the stage management and error tolerance, the project also uses the [Apache Ratis](http://ratis.incubator.apache.org/), a highly customizable [Raft](https://raft.github.io/) protocol implementation.
+For the data state management and error tolerance, the project also uses the [Apache Ratis](http://ratis.incubator.apache.org/), a highly customizable [Raft](https://raft.github.io/) protocol implementation.
 
 This is a final project for the Information Systems program's "Distributed Systems" course, in the [Federal University of Uberlândia](http://www.ufu.br/).
 
