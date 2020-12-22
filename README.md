@@ -43,9 +43,9 @@ It will generate two jars: a standard one, and another one with dependencies.
 3. Starting Database Server
 
 The Ratis implementation is configured for use three instances and backup the data at `/tmp` folder:
-- p1: 127.0.0.1:3000
-- p2: 127.0.0.1:3500
-- p3: 127.0.0.1:4000
+- `p1`: `127.0.0.1:3000`
+- `p2`: `127.0.0.1:3500`
+- `p3`: `127.0.0.1:4000`
 
 So we need to start them:
 
