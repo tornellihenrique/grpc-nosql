@@ -68,7 +68,7 @@ In the Router Server, the jar is at `grpc-nosql/grpc-java-server/target/router-s
 $ java -jar grpc-java-server/target/router-server-jar-with-dependencies.jar
 ```
 
-**Now the server will be running at the 50051 port and will be backing up every 5 seconds.**
+Now the server will be running at the 50051 port.
 
 5. Starting client
 
